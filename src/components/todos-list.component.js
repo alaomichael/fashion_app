@@ -2,26 +2,37 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button} from 'reactstrap';
+import '../App.css';
 
 // Todo functional Component, that is passed into TodosList Class Component
 //  A link to delete todo item
 // <a href="#" onClick={props.onDeleteClick.bind(this,props.todo._id) }>Delete</a>
  
 const Todo = props => (  
+    
     <>  
-    <tr>        
+     <tr>        
     <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>        
     <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_responsible}</td>        
     <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_priority}</td>        
     <td>            
     <Link to={"/edit/"+props.todo._id}>
     <Button
-    className='btn btn-success'>Edit</Button>
+    className='btn btn-primary'>Edit</Button>
     </Link>
+                
     { ` | ` }
     <Button 
     className='btn btn-danger' 
     onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
+                { ` | ` }
+                <Link to={ "/show/" + props.todo._id }>
+                    <Button
+                        className="btn btn-success"
+                        >Show</Button>
+                </Link>
+
+                
 
     </td>    
     </tr>
