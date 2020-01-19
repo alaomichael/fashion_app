@@ -37,6 +37,8 @@ todoRoutes.route('/delete/:id').delete(function(req, res) {
 let id = req.params.id;
 Todo.findByIdAndDelete(id, function(err, todo) {
 res.json(todo);
+}).catch(err => {
+    res.status(400).send("Todo Deleted");
 });
 });
 

@@ -40,10 +40,11 @@ export default class CreateList extends Component {
    onSubmit(e) {
 e.preventDefault();
 
-console.log(`Form submitted:`);
+console.log(`Form submitted: True`);
 console.log(`Todo Description: ${this.state.todo_description}`);
 console.log(`Todo Responsible: ${this.state.todo_responsible}`);
 console.log(`Todo Priority: ${this.state.todo_priority}`);
+console.log(`Todo Created on: ${Date.now()}`);
 
 const newTodo = {
 todo_description: this.state.todo_description,
@@ -52,7 +53,7 @@ todo_priority: this.state.todo_priority,
 todo_completed: this.state.todo_completed
 };
 
-axios.post('http://localhost:4000/todos/add', newTodo)
+       axios.post('http://localhost:4000/todos/add', newTodo)
 .then(res => console.log(res.data));
 
 this.setState({
@@ -62,7 +63,11 @@ todo_priority: '',
 todo_completed: false
 })
 
-this.props.history.push('/');
+// Refresh the page to show the new update
+window.location = '/';
+
+// Return to the previous page
+//this.props.history.push('/');
 
 }
 
