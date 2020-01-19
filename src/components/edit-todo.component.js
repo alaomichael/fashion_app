@@ -76,16 +76,20 @@ const obj = {
             <form onSubmit={this.onSubmit}>                    
             <div className="form-group">                         
             <label>Description: </label>                        
-            <input  type="text"                                className="form-control"                                
+            <input  type="text"                                
+            className="form-control"                                
             value={this.state.todo_description}
-            onChange={this.onChangeTodoDescription}                                />                    
+            onChange={this.onChangeTodoDescription}                                
+            />                    
             </div>                    
-            <div className="form-group">                        <label>Responsible: </label>                        
+            <div className="form-group">                        
+            <label>Responsible: </label>                        
             <input
             type="text"                                 
             className="form-control"                                
             value={this.state.todo_responsible}
-            onChange={this.onChangeTodoResponsible}                                />                    
+            onChange={this.onChangeTodoResponsible}                                
+            />                    
             </div>         
 
             <div className="form-group">                        
@@ -106,11 +110,14 @@ const obj = {
             <input  
             className="form-check-input"
             type="radio"
-            name="priorityOptions"                                 id="priorityMedium"                                    
+            name="priorityOptions"                                 
+            id="priorityMedium"                                    
             value="Medium"                                     
             checked={this.state.todo_priority==='Medium'}
-            onChange={this.onChangeTodoPriority}                                    />
-            <label className="form-check-label">Medium</label>                        </div>
+            onChange={this.onChangeTodoPriority}                                    
+            />
+            <label className="form-check-label">Medium</label>                        
+            </div>
             <div className="form-check form-check-inline">
             <input  className="form-check-input"
             type="radio"                                     
@@ -120,7 +127,8 @@ const obj = {
             checked={this.state.todo_priority==='High'}
             onChange={this.onChangeTodoPriority}
             />                            
-            <label className="form-check-label">High</label>                        </div>                    
+            <label className="form-check-label">High</label>                        
+            </div>                    
             </div>                    
             <div className="form-check">                        
             <input  

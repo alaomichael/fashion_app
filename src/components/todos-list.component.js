@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import {
-    Container, ListGroup, ListGroupItem, Button, Modal,
-    ModalHeader,
-    ModalBody, ModalFooter,
-    Form,
-    FormGroup,
-    Label,
-    Input
-} from 'reactstrap';
+import { Button} from 'reactstrap';
 
 
 // Todo functional Component, that is passed into TodosList Class Component
+//  A link to delete todo item
+// <a href="#" onClick={props.onDeleteClick.bind(this,props.todo._id) }>Delete</a>
+ 
 const Todo = props => (  
     <>  
     <tr>        
@@ -22,7 +17,10 @@ const Todo = props => (
     <td>            
     <Link to={"/edit/"+props.todo._id}>Edit</Link>
      { ` | ` }
-    <a href="#" onClick={props.onDeleteClick.bind(this,props.todo._id) }>Delete</a>
+    <Button 
+    className='btn btn-danger' 
+    onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
+    
     </td>    
     </tr>
     </>
@@ -44,9 +42,7 @@ componentDidMount() {
         .catch(function (error) {
             console.log(error);
         })
-
-        console.log(this.state);
-        
+      
 }
 
  todoList() {  
