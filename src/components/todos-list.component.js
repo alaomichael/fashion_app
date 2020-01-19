@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button} from 'reactstrap';
 
-
 // Todo functional Component, that is passed into TodosList Class Component
 //  A link to delete todo item
 // <a href="#" onClick={props.onDeleteClick.bind(this,props.todo._id) }>Delete</a>
@@ -15,12 +14,15 @@ const Todo = props => (
     <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_responsible}</td>        
     <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_priority}</td>        
     <td>            
-    <Link to={"/edit/"+props.todo._id}>Edit</Link>
-     { ` | ` }
+    <Link to={"/edit/"+props.todo._id}>
+    <Button
+    className='btn btn-success'>Edit</Button>
+    </Link>
+    { ` | ` }
     <Button 
     className='btn btn-danger' 
     onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
-    
+
     </td>    
     </tr>
     </>
@@ -46,6 +48,7 @@ componentDidMount() {
 }
 
  todoList() {  
+     // Delete Button Link
     let onDeleteClick;
      onDeleteClick = _id => {
          axios.delete('http://localhost:4000/todos/delete/' + _id)
@@ -56,10 +59,16 @@ componentDidMount() {
 
          // Refresh the page to show the new list of todos after deleting 
          window.location = '/';
-     };      
+     };     
+         
      return this.state.todos.map(function(currentTodo, i,_id){    
          
-         return <Todo todo={ currentTodo } key={ i } id={ _id } onDeleteClick={onDeleteClick}  />;  
+         return <Todo todo={ currentTodo } 
+         key={ i } 
+         id={ _id } 
+         onDeleteClick={ onDeleteClick } 
+          
+         />;  
              
     })    
 }  
