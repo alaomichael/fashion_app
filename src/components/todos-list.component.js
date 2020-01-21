@@ -17,8 +17,6 @@ const Todo = props => (
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td> 
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td>          
 <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>        
-<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.date }</td>         
-<td> 
 <Link to={ "/show/" + props.todo._id }>
 <Button
 className="btn btn-success"
@@ -104,8 +102,7 @@ componentDidMount() {
              <th>Name</th>
             <th>Phone</th> 
             <th>Email</th>                           
-             <th>Description</th>                      
-            <th>Collection Date</th>                          
+             <th>Description</th>                   
              <th>Action</th>                        
              </tr>                    
              </thead>                    
