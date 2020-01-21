@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button} from 'reactstrap';
-import '../App.css';
+import { Container, ListGroup, ListGroupItem,Button} from 'reactstrap';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+
 
 // Todo functional Component, that is passed into TodosList Class Component
 //  A link to delete todo item
@@ -10,33 +11,33 @@ import '../App.css';
  
 const Todo = props => (  
     
-    <>  
-     <tr>        
-    <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>        
-    <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_responsible}</td>        
-    <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_priority}</td>        
-    <td>            
-    <Link to={"/edit/"+props.todo._id}>
-    <Button
-    className='btn btn-primary'>Edit</Button>
-    </Link>
-                
-    { ` | ` }
-    <Button 
-    className='btn btn-danger' 
-    onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
-                { ` | ` }
-                <Link to={ "/show/" + props.todo._id }>
-                    <Button
-                        className="btn btn-success"
-                        >Show</Button>
-                </Link>
+<>
+<tr>
+<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
+<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td> 
+<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td>          
+<td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>        
+<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.date }</td>         
+<td> 
+<Link to={ "/show/" + props.todo._id }>
+<Button
+className="btn btn-success"
+>Show</Button>
+</Link> 
+{ ` | ` }           
+<Link to={"/edit/"+props.todo._id}>
+<Button className='btn btn-primary'
+>Edit</Button>
+</Link>
+{ ` | ` }
+<Button 
+className='btn btn-danger' 
+onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
 
-                
-
-    </td>    
-    </tr>
-    </>
+ 
+</td>    
+</tr>
+</>
     )
 
 export default class TodosList extends Component {
@@ -78,8 +79,7 @@ componentDidMount() {
          key={ i } 
          id={ _id } 
          onDeleteClick={ onDeleteClick } 
-          
-         />;  
+                       />;  
              
     })    
 }  
@@ -100,15 +100,18 @@ componentDidMount() {
              <table className="table table-striped" 
              style={{ marginTop: 20 }} >                    
              <thead>                        
-             <tr>                            
-             <th>Description</th>                            
-             <th>Responsible</th>                            
-             <th>Priority</th>                            
+             <tr>   
+             <th>Name</th>
+            <th>Phone</th> 
+            <th>Email</th>                           
+             <th>Description</th>                      
+            <th>Collection Date</th>                          
              <th>Action</th>                        
              </tr>                    
              </thead>                    
-             <tbody>                        
-             { this.todoList() }              
+             <tbody>
+                         
+             { this.todoList() } 
              </tbody>                
              </table>            
              </div>        

@@ -1,5 +1,15 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import {
+    Button,
+    Modal,
+    ModalHeader,
+    ModalBody,
+    Form,
+    FormGroup,
+    Label,
+    Input
+} from 'reactstrap';
 
 export default class EditTodo extends Component {    
     constructor(props) {        
@@ -10,7 +20,26 @@ export default class EditTodo extends Component {
     this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);        
     this.onSubmit = this.onSubmit.bind(this);        
             
-        this.state = {            
+        this.state = {
+            modal: false,
+            name: '',
+            phone: '',
+            underbust: '',
+            hip: '',
+            length: '',
+            waist: '',
+            sleeve: '',
+            round_sleeve: '',
+            nip: '',
+            stk: '',
+            shoulder: '',
+            gown_length: '',
+            skirt_length: '',
+            blouse_length: '',
+            skirt_waist: '',
+            email: '',
+            bust: '', 
+            date:'',           
             todo_description: '',            
             todo_responsible: '',            
             todo_priority: '',      
@@ -20,8 +49,25 @@ export default class EditTodo extends Component {
     componentDidMount() {        
         axios.get('http://localhost:4000/todos/'+this.props.match.params.id)            
         .then(response => {                
-            this.setState({                    
-                todo_description: response.data.todo_description,  
+            this.setState({ 
+                name: response.data.name,
+                phone: response.data.phone,
+                email: response.data.email,
+                underbust: response.data.underbust,
+                hip: response.data.hip,
+                length: response.data.length,
+                waist: response.data.waist,
+                sleeve: response.data.sleeve,
+                round_sleeve: response.data.round_sleeve,
+                nip: response.data.nip,
+                stk: response.data.stk,
+                shoulder: response.data.shoulder,
+                gown_length: response.data.gown_length,
+                skirt_length: response.data.skirt_length,
+                blouse_length: response.data.blouse_length,
+                skirt_waist: response.data.skirt_waist,
+                bust: response.data.bust, 
+                date:response.data.date,             todo_description: response.data.todo_description,  
                 todo_responsible: response.data.todo_responsible,  
                 todo_priority: response.data.todo_priority,        
                 todo_completed: response.data.todo_completed             
@@ -29,7 +75,16 @@ export default class EditTodo extends Component {
         })      
             .catch(function (error) {                
                 console.log(error);            
-            })    
+            })  
+            
+            // Open Modal
+            this.openModal();
+}
+
+openModal = ()=> {
+    
+        this.toggle();
+   
 }
 onChangeTodoDescription(e) {        
 this.setState({            
@@ -52,11 +107,38 @@ onChangeTodoCompleted(e) {
     });    
 }    
 
+    onChange = e => {
+        this.setState({ [e.target.name]: e.target.value });
+    };
+
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        });
+    };
 
 
     onSubmit(e) {        
 e.preventDefault();        
-const obj = {            
+const obj = {     
+    name: this.state.name,
+    phone: this.state.phone,
+    email: this.state.email,
+    underbust: this.state.underbust,
+    hip: this.state.hip,
+    length: this.state.length,
+    waist: this.state.waist,
+    sleeve: this.state.sleeve,
+    round_sleeve: this.state.round_sleeve,
+    nip: this.state.nip,
+    stk: this.state.stk,
+    shoulder: this.state.shoulder,
+    gown_length: this.state.gown_length,
+    skirt_length: this.state.skirt_length,
+    blouse_length: this.state.blouse_length,
+    skirt_waist: this.state.skirt_waist,
+    bust: this.state.bust,  
+    date: this.state.date,
     todo_description: this.state.todo_description,            
     todo_responsible: this.state.todo_responsible,            
     todo_priority: this.state.todo_priority,            
@@ -71,83 +153,241 @@ const obj = {
        }    
     render() {        
         return (            
-            <div>                
-            <h3 align="center">Update Todo</h3>                
-            <form onSubmit={this.onSubmit}>                    
-            <div className="form-group">                         
-            <label>Description: </label>                        
-            <input  type="text"                                
-            className="form-control"                                
-            value={this.state.todo_description}
-            onChange={this.onChangeTodoDescription}                                
-            />                    
-            </div>                    
-            <div className="form-group">                        
-            <label>Responsible: </label>                        
-            <input
-            type="text"                                 
-            className="form-control"                                
-            value={this.state.todo_responsible}
-            onChange={this.onChangeTodoResponsible}                                
-            />                    
-            </div>         
 
-            <div className="form-group">                        
-            <div className="form-check form-check-inline">
-            <input  className="form-check-input"
-            type="radio"                                     
-            name="priorityOptions"
-            id="priorityLow"                                     
-            value="Low"
-            checked={this.state.todo_priority==='Low'}
-            onChange={this.onChangeTodoPriority}
-            />
+<div style={ { marginTop: 10 } }>
+                <h4 align="center"><Button
+                    color='dark'
+                    style={ { marginBottom: '2rem' } }
+                    onClick={ this.toggle }
+                >
+                    Update Customer Data
+</Button></h4>  
 
-            <label className="form-check-label">Low</label>                        
-            </div>                        
-            
-            <div className="form-check form-check-inline">                            
-            <input  
-            className="form-check-input"
-            type="radio"
-            name="priorityOptions"                                 
-            id="priorityMedium"                                    
-            value="Medium"                                     
-            checked={this.state.todo_priority==='Medium'}
-            onChange={this.onChangeTodoPriority}                                    
-            />
-            <label className="form-check-label">Medium</label>                        
-            </div>
-            <div className="form-check form-check-inline">
-            <input  className="form-check-input"
-            type="radio"                                     
-            name="priorityOptions"
-            id="priorityHigh"                                     
-            value="High"                                     
-            checked={this.state.todo_priority==='High'}
-            onChange={this.onChangeTodoPriority}
-            />                            
-            <label className="form-check-label">High</label>                        
-            </div>                    
-            </div>                    
-            <div className="form-check">                        
-            <input  
-            className="form-check-input"
-            id="completedCheckbox"                                
-            type="checkbox"                                
-            name="completedCheckbox"
-            onChange={this.onChangeTodoCompleted}
-            checked={this.state.todo_completed}
-            value={this.state.todo_completed}                                
-            />                        
-            <label className="form-check-label" htmlFor="completedCheckbox">Completed</label>                                            
-            </div>                    
-            <div className="form-group">                        
-            <input type="submit" 
-            value="Update Todo" 
-            className="btn btn-primary" />                    
-            </div>                
-            </form>            
-            </div>        
-            )    
-        }}
+<Modal isOpen={ this.state.modal } toggle={ this.toggle }>
+<ModalHeader toggle={ this.toggle }>Edit Customer Data</ModalHeader>
+<ModalBody>
+<Form onSubmit={ this.onSubmit }>
+<FormGroup>
+<Label for='item'>Name</Label>
+<Input
+type='text'
+name='name'
+id='item'
+value={ this.state.name }
+onChange={ this.onChange }
+/>
+
+<Label for='phone'>Phone</Label>
+<Input
+type='text'
+name='phone'
+id='phone'
+value={ this.state.phone }                                  
+onChange={ this.onChange }
+/>
+<Label for='email'>E-mail</Label>
+<Input
+type='text'
+name='email'
+id='email'
+value={ this.state.email }
+onChange={ this.onChange }
+/>
+<Label for='bust'>Bust</Label>
+<Input
+type='text'
+name='bust'
+id='bust'
+value={ this.state.bust }
+onChange={ this.onChange }
+/>
+<Label for='underbust'>UnderBust</Label>
+<Input
+type='text'
+name='underbust'
+id='underbust'
+value={ this.state.underbust }
+onChange={ this.onChange }
+/>
+<Label for='hip'>Hip</Label>
+<Input
+type='text'
+name='hip'
+id='hip'
+value={ this.state.hip}
+onChange={ this.onChange }
+/>
+<Label for='length'>Length</Label>
+<Input
+type='text'
+name='length'
+id='length'
+value={ this.state.length }
+onChange={ this.onChange }
+/>
+<Label for='waist'>Waist</Label>
+<Input
+type='text'
+name='waist'
+id='waist'
+value={ this.state.waist }
+onChange={ this.onChange }
+/>
+<Label for='nip'>Nip to Nip</Label>
+<Input
+type='text'
+name='nip'
+id='nip'
+value={ this.state.nip }
+onChange={ this.onChange }
+/>
+<Label for='gown_length'>Gown Length</Label>
+<Input
+type='text'
+name='gown_length'
+id='gown_length'
+value={ this.state.gown_length }
+onChange={ this.onChange }
+/>
+<Label for='skirt_length'>Skirt Length</Label>
+<Input
+type='text'
+name='skirt_length'
+id='skirt_length'
+value={ this.state.skirt_length }
+onChange={ this.onChange }
+/>
+<Label for='blouse_length'>Blouse Length</Label>
+<Input
+type='text'
+name='blouse_length'
+id='blouse_length'
+value={ this.state.blouse_length }
+onChange={ this.onChange }
+/>
+<Label for='skirt_waist'>Skirt Waist</Label>
+<Input
+type='text'
+name='skirt_waist'
+id='skirt_waist'
+value={ this.state.skirt_waist }
+onChange={ this.onChange }
+/>
+<Label for='stk'>Shoulder to Knee</Label>
+<Input
+type='text'
+name='stk'
+id='stk'
+value={ this.state.stk }
+onChange={ this.onChange }
+/>
+<Label for='shoulder'>Shoulder</Label>
+<Input
+type='text'
+name='shoulder'
+id='shoulder'
+value={ this.state.shoulder }
+onChange={ this.onChange }
+/>
+<Label for='sleeve'>Sleeve</Label>
+<Input
+type='text'
+name='sleeve'
+id='sleeve'
+value={ this.state.sleeve }
+onChange={ this.onChange }
+/>
+<Label for='round_sleeve'>Round Sleeve</Label>
+<Input
+type='text'
+name='round_sleeve'
+id='round_sleeve'
+value={ this.state.round_sleeve }
+onChange={ this.onChange }
+/>
+
+<div className="form-group">
+<label>Description: </label>
+<input type="text"
+className="form-control"
+value={ this.state.todo_description }
+onChange={ this.onChangeTodoDescription }
+/>
+</div>
+<div className="form-group">
+<label>Responsible: </label>
+<input type="text"
+className="form-control"
+value={ this.state.todo_responsible }
+onChange={ this.onChangeTodoResponsible }
+/>
+</div>
+<div className="form-group">
+<div className="form-check form-check-inline">
+<input className="form-check-input"
+type="radio"
+name="priorityOptions"
+id="priorityLow"
+value="Low"
+checked={ this.state.todo_priority === 'Low' }
+onChange={ this.onChangeTodoPriority }
+/>
+<label className="form-check-label">Low</label>
+</div>
+<div className="form-check form-check-inline">
+<input className="form-check-input"
+type="radio"
+name="priorityOptions"
+id="priorityMedium"
+value="Medium"
+checked={ this.state.todo_priority === 'Medium' }
+onChange={ this.onChangeTodoPriority }
+/>
+
+<label className="form-check-label">Medium</label>
+</div>
+<div className="form-check form-check-inline">
+<input className="form-check-input"
+type="radio"
+name="priorityOptions"
+id="priorityHigh"
+value="High"
+checked={ this.state.todo_priority === 'High' }
+onChange={ this.onChangeTodoPriority }
+/>
+<label className="form-check-label">High</label>
+</div>
+</div>
+
+<Label for='date'>Collection Date</Label>
+<Input
+type='date'
+name='date'
+id='date'
+value={ this.state.date }
+onChange={ this.onChange }
+/>
+
+<div className="form-check">
+<input
+className="form-check-input"
+id="completedCheckbox"
+type="checkbox"
+name="completedCheckbox"
+onChange={ this.onChangeTodoCompleted }
+checked={ this.state.todo_completed }
+value={ this.state.todo_completed }
+/>
+<label className="form-check-label" htmlFor="completedCheckbox">Completed</label>
+</div>
+
+<div className="form-group">
+<input type="submit" value="Update Data" className="btn btn-success" />
+</div>
+</FormGroup>
+</Form>
+</ModalBody>
+</Modal>
+</div>      
+)    
+}}

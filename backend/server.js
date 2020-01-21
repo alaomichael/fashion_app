@@ -10,7 +10,7 @@ let Todo = require('./todo.model');
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true });
+mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
 console.log("MongoDB database connection established successfully");
@@ -33,12 +33,19 @@ res.json(todo);
 });
 });
 
+todoRoutes.route('/show/:id').get(function (req, res) {
+    let id = req.params.id;
+    Todo.findById(id, function (err, todo) {
+        res.json(todo);
+    });
+});
+
 todoRoutes.route('/delete/:id').delete(function(req, res) {
 let id = req.params.id;
 Todo.findByIdAndDelete(id, function(err, todo) {
 res.json(todo);
 }).catch(err => {
-    res.status(400).send("Todo Deleted");
+    res.status(400).send("Customer Deleted");
 });
 });
 
@@ -48,6 +55,23 @@ Todo.findById(req.params.id, function(err, todo) {
 if (!todo)
 res.status(404).send("data is not found");
 else
+todo.name = req.body.name;
+todo.phone = req.body.phone;
+todo.email = req.body.email;
+todo.underbust = req.body.underbust;
+todo.hip = req.body.hip;
+todo.length = req.body.length;
+todo.waist = req.body.waist;
+todo.sleeve = req.body.sleeve;
+todo.round_sleeve = req.body.round_sleeve;
+todo.nip = req.body.nip;
+todo.stk = req.body.stk;
+todo.shoulder = req.body.shoulder;
+todo.gown_length = req.body.gown_length;
+todo.skirt_length = req.body.skirt_length;
+todo.blouse_length = req.body.blouse_length;
+todo.skirt_waist = req.body.skirt_waist;
+todo.bust = req.body.bust;
 todo.todo_description = req.body.todo_description;
 todo.todo_responsible = req.body.todo_responsible;
 todo.todo_priority = req.body.todo_priority;
