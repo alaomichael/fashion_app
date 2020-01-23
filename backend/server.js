@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const todoRoutes = express.Router();
 const userRoutes = express.Router();
 const PORT = 4000;
-let Todo = require('./todo.model');
-let User = require('./user.model');
+let Todo = require('./models/todo.model');
+let User = require('./models/user.model');
 
 //const usersRouter = require('./routes/users');
 
@@ -55,10 +55,11 @@ res.json(todo);
 });
 });
 
+// Just editted in case of any error
 todoRoutes.route('/show/:id').get(function (req, res) {
     let id = req.params.id;
-    Todo.findById(id, function (err, todo) {
-        res.json(todo);
+    Todo.findById(id, function (err, todo,user) {
+        res.json(todo,user);
     });
 });
 
