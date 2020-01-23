@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Container, ListGroup, ListGroupItem,Button} from 'reactstrap';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
-
+import { Button} from 'reactstrap';
 
 // Todo functional Component, that is passed into TodosList Class Component
 //  A link to delete todo item
@@ -13,10 +11,12 @@ const Todo = props => (
     
 <>
 <tr>
+<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.username }</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td> 
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td>          
-<td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td>        
+<td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td> 
+<td>{ props.todo.date.substring(0, 10) }</td>       
 <Link to={ "/show/" + props.todo._id }>
 <Button
 className="btn btn-success"
@@ -31,9 +31,7 @@ className="btn btn-success"
 <Button 
 className='btn btn-danger' 
 onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
-
- 
-</td>    
+   
 </tr>
 </>
     )
@@ -43,7 +41,8 @@ export default class TodosList extends Component {
 constructor(props) {
 super(props);
 //this.deleteExercise = this.deleteExercise.bind(this);
-this.state = {todos: []};
+this.state = {todos: [],
+users:[]};
 }
 
 componentDidMount() {
@@ -54,6 +53,22 @@ componentDidMount() {
         .catch(function (error) {
             console.log(error);
         })
+
+
+    // Get Username
+    axios.get('http://localhost:4000/users/')
+        .then(response => {
+            if (response.data.length > 0) {
+                this.setState({
+                    users: response.data.map(user => user.username),
+                    username: response.data[0].username
+                })
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+
       
 }
 
@@ -82,15 +97,6 @@ componentDidMount() {
     })    
 }  
 
-//  deleteExercise(_id) {
-//     axios.delete('http://localhost:4000/todos/delete/'+_id)
-//       .then(response => { console.log(response.data)});
-
-//     this.setState({
-//       exercises: this.state.todos.filter(el => el._id !== _id)
-//     })
-// }
-  
     render() {   
            return (            
              <div>                
@@ -98,12 +104,14 @@ componentDidMount() {
              <table className="table table-striped" 
              style={{ marginTop: 20 }} >                    
              <thead>                        
-             <tr>   
+             <tr>
+            <th>Username</th>   
              <th>Name</th>
             <th>Phone</th> 
             <th>Email</th>                           
-             <th>Description</th>                   
-             <th>Action</th>                        
+             <th>Description</th>   
+            <th>Collection Date</th>                  
+             <th>Actions</th>                        
              </tr>                    
              </thead>                    
              <tbody>

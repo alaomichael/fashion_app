@@ -10,6 +10,8 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 export default class CreateList extends Component {
 
     constructor(props) {
@@ -18,10 +20,13 @@ export default class CreateList extends Component {
         this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);
         this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);
         this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);
+        this.onChangeUsername = this.onChangeUsername.bind(this);
+        this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             modal: false,
+            username: '',
             name: '',
             phone: '',
             underbust: '',
@@ -39,17 +44,44 @@ export default class CreateList extends Component {
             skirt_waist: '',
             email: '',
             bust: '' , 
-            date: '',
+            date: new Date(),
             todo_description: '',
             todo_responsible: '',
             todo_priority: '',
-            todo_completed: false
+            todo_completed: false,
+            users: []
         }
 
     }
 
     componentDidMount(){
         this.toggle();
+
+        axios.get('http://localhost:4000/users/')
+            .then(response => {
+                if (response.data.length > 0) {
+                    this.setState({
+                        users: response.data.map(user => user.username),
+                        username: response.data[0].username
+                    })
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+
+    onChangeUsername(e) {
+        this.setState({
+            username: e.target.value
+        })
+    }
+
+
+    onChangeDate(date) {
+        this.setState({
+            date: date
+        })
     }
 
     onChangeTodoDescription(e) {
@@ -90,6 +122,7 @@ console.log(`Todo Priority: ${this.state.todo_priority}`);
 console.log(`Todo Created on: ${Date.now}`);
 
 const newTodo = {
+    username: this.state.username,
     name: this.state.name,
     phone: this.state.phone,
     email: this.state.email,
@@ -111,7 +144,8 @@ const newTodo = {
 todo_description: this.state.todo_description,
 todo_responsible: this.state.todo_responsible,
 todo_priority: this.state.todo_priority,
-todo_completed: this.state.todo_completed
+todo_completed: this.state.todo_completed,
+users:this.state.users
 };
 
        axios.post('http://localhost:4000/todos/add', newTodo)
@@ -122,6 +156,8 @@ todo_completed: this.state.todo_completed
 
 this.setState({
     modal: false,
+    username:'',
+    users:[],
     name: '',
     phone: '',
     underbust: '',
@@ -171,6 +207,23 @@ Add Customer Data
 <ModalBody>
 <Form onSubmit={ this.onSubmit }>
 <FormGroup>
+<div className="form-group">
+<label>Username: </label>
+<select ref="userInput"
+required
+className="form-control"
+value={ this.state.username }
+onChange={ this.onChangeUsername }>
+{
+this.state.users.map(function (user) {
+return <option
+key={ user }
+value={ user }>{ user }
+</option>;
+})
+}
+</select>
+</div>
 <Label for='item'>Name: </Label>
 <Input
 type='text'
@@ -308,16 +361,15 @@ id='round_sleeve'
 placeholder='Add Customer Round Sleeve'
 onChange={ this.onChange }
 />
-
-<Label for='date'>Collection Date: </Label>
-<Input
-type='date'
-name='date'
-id='date'
-placeholder='Add Collection Date'
-onChange={ this.onChange }
+<div className="form-group">
+<label>Collection Date: </label>
+<div>
+<DatePicker
+selected={ this.state.date }
+onChange={ this.onChangeDate }
 />
-
+</div>
+</div>
 <div className="form-group">
 <label>Description: </label>
 <input type="text"

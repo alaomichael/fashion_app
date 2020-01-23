@@ -10,14 +10,18 @@ import {
     Label,
     Input
 } from 'reactstrap';
+import DatePicker from 'react-datepicker';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default class EditTodo extends Component {    
     constructor(props) {        
-        super(props);        
+        super(props);   
+        this.onChangeUsername = this.onChangeUsername.bind(this);     
     this.onChangeTodoDescription = this.onChangeTodoDescription.bind(this);        
     this.onChangeTodoResponsible = this.onChangeTodoResponsible.bind(this);        
     this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);        
-    this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this);        
+    this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this); 
+        this.onChangeDate = this.onChangeDate.bind(this);       
     this.onSubmit = this.onSubmit.bind(this);        
             
         this.state = {
@@ -39,17 +43,19 @@ export default class EditTodo extends Component {
             skirt_waist: '',
             email: '',
             bust: '', 
-            date:'',           
+            date:new Date(),           
             todo_description: '',            
             todo_responsible: '',            
             todo_priority: '',      
-            todo_completed: false        
+            todo_completed: false,
+            users: []       
         }    
     }    
     componentDidMount() {        
         axios.get('http://localhost:4000/todos/'+this.props.match.params.id)            
         .then(response => {                
             this.setState({ 
+                username: response.data.username,
                 name: response.data.name,
                 phone: response.data.phone,
                 email: response.data.email,
@@ -67,7 +73,7 @@ export default class EditTodo extends Component {
                 blouse_length: response.data.blouse_length,
                 skirt_waist: response.data.skirt_waist,
                 bust: response.data.bust, 
-                date:response.data.date,             todo_description: response.data.todo_description,  
+                date:new Date(response.data.date),             todo_description: response.data.todo_description,  
                 todo_responsible: response.data.todo_responsible,  
                 todo_priority: response.data.todo_priority,        
                 todo_completed: response.data.todo_completed             
@@ -76,11 +82,34 @@ export default class EditTodo extends Component {
             .catch(function (error) {                
                 console.log(error);            
             })  
+
+            // Get Username
+        axios.get('http://localhost:4000/users/')
+            .then(response => {
+                if (response.data.length > 0) {
+                    this.setState({
+                        users: response.data.map(user => user.username),
+                    })
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
             
             // Open Modal
             this.openModal();
 }
 
+    onChangeUsername(e) {
+        this.setState({
+            username: e.target.value
+        })
+    }
+    onChangeDate(date) {
+        this.setState({
+            date: date
+        })
+    }
 openModal = ()=> {
     
         this.toggle();
@@ -120,7 +149,8 @@ onChangeTodoCompleted(e) {
 
     onSubmit(e) {        
 e.preventDefault();        
-const obj = {     
+const obj = {   
+    username: this.state.username,  
     name: this.state.name,
     phone: this.state.phone,
     email: this.state.email,
@@ -168,6 +198,23 @@ const obj = {
 <ModalBody>
 <Form onSubmit={ this.onSubmit }>
 <FormGroup>
+<div className="form-group">
+<label>Username: </label>
+<select ref="userInput"
+required
+className="form-control"
+value={ this.state.username }
+onChange={ this.onChangeUsername }>
+{
+this.state.users.map(function (user) {
+return <option
+key={ user }
+value={ user }>{ user }
+</option>;
+})
+}
+</select>
+</div>
 <Label for='item'>Name</Label>
 <Input
 type='text'
@@ -359,14 +406,15 @@ onChange={ this.onChangeTodoPriority }
 </div>
 </div>
 
-<Label for='date'>Collection Date</Label>
-<Input
-type='date'
-name='date'
-id='date'
-value={ this.state.date }
-onChange={ this.onChange }
+<div className="form-group">
+<label>Collection Date: </label>
+<div>
+<DatePicker
+selected={ this.state.date }
+onChange={ this.onChangeDate }
 />
+</div>
+</div>
 
 <div className="form-check">
 <input

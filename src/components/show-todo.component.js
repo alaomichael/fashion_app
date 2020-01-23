@@ -1,21 +1,17 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import {
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    Form,
-    FormGroup,
-    Label,
-    Input
+       Label
+    
 } from 'reactstrap';
+
 
 export default class ShowTodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modal: false,
+            username:'',
             name: '',
             phone: '',
             underbust: '',
@@ -44,6 +40,7 @@ export default class ShowTodo extends Component {
         axios.get('http://localhost:4000/todos/' + this.props.match.params.id)
             .then(response => {
                 this.setState({
+                    username: response.data.username,
                     name: response.data.name,
                     phone: response.data.phone,
                     email: response.data.email,
@@ -84,6 +81,11 @@ export default class ShowTodo extends Component {
 <h3 align="center">Show Customer Data</h3>
 <form onSubmit={ this.onSubmit }>
 <h5>
+<div className="form-group">
+<Label >Username: </Label>
+{ `  ` }
+{ this.state.username }
+</div>
 <div className="form-group">
 <Label for='item'>Name: </Label>
 {`  `}
