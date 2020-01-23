@@ -224,7 +224,7 @@ value={ user }>{ user }
 }
 </select>
 </div>
-<Label for='item'>Name: </Label>
+<Label for='item'>*Name: </Label>
 <Input
 type='text'
 name='name'
@@ -233,7 +233,7 @@ placeholder='Add Customer Name'
 onChange={ this.onChange }
 />
 
-<Label for='phone'>Phone: </Label>
+<Label for='phone'>*Phone: </Label>
 <Input
 type='text'
 name='phone'
@@ -241,7 +241,7 @@ id='phone'
 placeholder='Add Customer Phone Number'
 onChange={ this.onChange }
 />
-<Label for='email'>E-mail: </Label>
+<Label for='email'>*E-mail: </Label>
 <Input
 type='text'
 name='email'

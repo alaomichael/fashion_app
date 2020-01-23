@@ -255,7 +255,7 @@ value={ this.state.todo_completed }
 <br/>
 <div className="form-group">
 <input type="submit"
-value="Back Homepage"
+value="Back"
 className="btn btn-primary" />
                     </div>
                     </h5>

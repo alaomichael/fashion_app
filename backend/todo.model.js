@@ -2,11 +2,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let Todo = new Schema({
 
+    
     name: {
-type: String
+type: String,required: true
 },
     phone: {
-type: Number
+type: Number,required: true
 },
     underbust: {
 type: Number
@@ -48,7 +49,7 @@ type: Number
 type: Number
 },
     email: {
-type: String
+        type: String, required: true
 },
     bust: {
 type: Number
@@ -66,7 +67,7 @@ todo_completed: {
 type: Boolean
 },
 date: {
-type: String
+type: Date
     }
 });
 

@@ -4,18 +4,40 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const todoRoutes = express.Router();
+const userRoutes = express.Router();
 const PORT = 4000;
 let Todo = require('./todo.model');
+let User = require('./user.model');
+
+//const usersRouter = require('./routes/users');
 
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/todos', { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect('mongodb://127.0.0.1:27017/fha', { useNewUrlParser: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
 console.log("MongoDB database connection established successfully");
 })
 
+// User Route
+userRoutes.route('/').get((req, res) => {
+    User.find()
+        .then(users => res.json(users))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+userRoutes.route('/add').post((req, res) => {
+    const username = req.body.username;
+
+    const newUser = new User({ username });
+
+    newUser.save()
+        .then(() => res.json('User added!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+// Customer Data Route
 todoRoutes.route('/').get(function(req, res) {
 Todo.find(function(err, todos) {
 if (err) {
@@ -55,6 +77,7 @@ Todo.findById(req.params.id, function(err, todo) {
 if (!todo)
 res.status(404).send("data is not found");
 else
+todo.username = req.body.username;
 todo.name = req.body.name;
 todo.phone = req.body.phone;
 todo.email = req.body.email;
@@ -72,6 +95,7 @@ todo.skirt_length = req.body.skirt_length;
 todo.blouse_length = req.body.blouse_length;
 todo.skirt_waist = req.body.skirt_waist;
 todo.bust = req.body.bust;
+todo.date = Date.parse(req.body.date);
 todo.todo_description = req.body.todo_description;
 todo.todo_responsible = req.body.todo_responsible;
 todo.todo_priority = req.body.todo_priority;
@@ -97,6 +121,8 @@ res.status(400).send('adding new todo failed');
 });
 
 app.use('/todos', todoRoutes);
+app.use('/users', userRoutes);
+
 app.listen(PORT, function() {
 console.log("Server is running on Port: " + PORT);
 });
