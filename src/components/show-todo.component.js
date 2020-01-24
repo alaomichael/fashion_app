@@ -182,6 +182,10 @@ export default class ShowTodo extends Component {
 { this.state.round_sleeve }
 
 </div>
+<Label for='image'>Picture: </Label>
+{ `  ` }
+{ this.state.image }
+
 <div className="form-group">
 <Label for='date'>Collection Date: </Label>
 {`  `}

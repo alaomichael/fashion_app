@@ -43,6 +43,7 @@ export default class EditTodo extends Component {
             skirt_waist: '',
             email: '',
             bust: '', 
+            image:'',
             date:new Date(),           
             todo_description: '',            
             todo_responsible: '',            
@@ -72,7 +73,8 @@ export default class EditTodo extends Component {
                 skirt_length: response.data.skirt_length,
                 blouse_length: response.data.blouse_length,
                 skirt_waist: response.data.skirt_waist,
-                bust: response.data.bust, 
+                bust: response.data.bust,
+                image:response.data.image, 
                 date:new Date(response.data.date),             todo_description: response.data.todo_description,  
                 todo_responsible: response.data.todo_responsible,  
                 todo_priority: response.data.todo_priority,        
@@ -167,7 +169,8 @@ const obj = {
     skirt_length: this.state.skirt_length,
     blouse_length: this.state.blouse_length,
     skirt_waist: this.state.skirt_waist,
-    bust: this.state.bust,  
+    bust: this.state.bust,
+    image:this.state.image,  
     date: this.state.date,
     todo_description: this.state.todo_description,            
     todo_responsible: this.state.todo_responsible,            
@@ -352,6 +355,23 @@ id='round_sleeve'
 value={ this.state.round_sleeve }
 onChange={ this.onChange }
 />
+                                <Label for='image'>Picture: </Label>
+                                <Input
+                                    type='file'
+                                    name='image'
+                                    id='image'
+                                    
+                                    onChange={ this.onChange }
+                                />
+<div className="form-group">
+<label>Collection Date: </label>
+<div>
+<DatePicker
+selected={ this.state.date }
+onChange={ this.onChangeDate }
+/>
+</div>
+</div>
 
 <div className="form-group">
 <label>Description: </label>
@@ -405,17 +425,6 @@ onChange={ this.onChangeTodoPriority }
 <label className="form-check-label">High</label>
 </div>
 </div>
-
-<div className="form-group">
-<label>Collection Date: </label>
-<div>
-<DatePicker
-selected={ this.state.date }
-onChange={ this.onChangeDate }
-/>
-</div>
-</div>
-
 <div className="form-check">
 <input
 className="form-check-input"

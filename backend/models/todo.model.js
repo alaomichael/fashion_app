@@ -54,6 +54,9 @@ let Todo = new Schema({
     bust: {
         type: Number
     },
+    image: {
+        type: String
+    },
     todo_description: {
         type: String
     },
@@ -72,3 +75,4 @@ let Todo = new Schema({
 });
 
 module.exports = mongoose.model('Todo', Todo);
+

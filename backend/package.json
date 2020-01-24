@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js"  
+    "server": "nodemon server.js" ,"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build" 
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Alao Michael",
+  "license": "MIT",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.5.4"
   }
 }

@@ -45,6 +45,7 @@ export default class CreateList extends Component {
             email: '',
             bust: '' , 
             date: new Date(),
+            image:null,
             todo_description: '',
             todo_responsible: '',
             todo_priority: '',
@@ -140,7 +141,8 @@ const newTodo = {
     blouse_length: this.state.blouse_length,
     skirt_waist: this.state.skirt_waist,
     bust: this.state.bust,
-    date: this.state.date,    
+    date: this.state.date, 
+    image:this.state.image,   
 todo_description: this.state.todo_description,
 todo_responsible: this.state.todo_responsible,
 todo_priority: this.state.todo_priority,
@@ -176,6 +178,7 @@ this.setState({
     email: '',
     bust: ''  ,
     date:'',
+    image:null,
 todo_description: '',
 todo_responsible: '',
 todo_priority: '',
@@ -359,6 +362,14 @@ type='text'
 name='round_sleeve'
 id='round_sleeve'
 placeholder='Add Customer Round Sleeve'
+onChange={ this.onChange }
+/>
+<Label for='image'>Picture: </Label>
+<Input
+type='file'
+name='image'
+id='image'
+placeholder='Add Chosen Style Picture'
 onChange={ this.onChange }
 />
 <div className="form-group">

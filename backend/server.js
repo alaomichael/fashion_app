@@ -14,7 +14,15 @@ let User = require('./models/user.model');
 app.use(cors());
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://127.0.0.1:27017/fha', { useNewUrlParser: true, useCreateIndex: true });
+// Offline Database
+// mongoose.connect('mongodb://127.0.0.1:27017/fha', { useNewUrlParser: true, useCreateIndex: true });
+// const connection = mongoose.connection;
+// connection.once('open', function() {
+// console.log("MongoDB database connection established successfully");
+// })
+
+//Online database
+mongoose.connect('mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
 console.log("MongoDB database connection established successfully");
@@ -96,6 +104,7 @@ todo.skirt_length = req.body.skirt_length;
 todo.blouse_length = req.body.blouse_length;
 todo.skirt_waist = req.body.skirt_waist;
 todo.bust = req.body.bust;
+todo.image = req.body.image;
 todo.date = Date.parse(req.body.date);
 todo.todo_description = req.body.todo_description;
 todo.todo_responsible = req.body.todo_responsible;

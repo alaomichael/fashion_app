@@ -14,7 +14,8 @@ const Todo = props => (
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.username }</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td> 
-<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td>          
+<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td> 
+            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.image }</td>          
 <td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td> 
 <td>{ props.todo.date.substring(0, 10) }</td>       
 <Link to={ "/show/" + props.todo._id }>
@@ -100,7 +101,7 @@ componentDidMount() {
     render() {   
            return (            
              <div>                
-             <h3>Todos List</h3>                
+             <h3>Customers List</h3>                
              <table className="table table-striped" 
              style={{ marginTop: 20 }} >                    
              <thead>                        
@@ -108,8 +109,9 @@ componentDidMount() {
             <th>Username</th>   
              <th>Name</th>
             <th>Phone</th> 
-            <th>Email</th>                           
-             <th>Description</th>   
+        <th>Email</th>                         <th>Image</th>   
+             <th>Description</th> 
+              
             <th>Collection Date</th>                  
              <th>Actions</th>                        
              </tr>                    
