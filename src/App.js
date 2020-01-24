@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import CreateTodo from "./components/create-todo.component";
 import EditTodo from "./components/edit-todo.component";
 import TodosList from "./components/todos-list.component";
 import 'bootstrap/dist/css/bootstrap.css';
-import logo from "./logo.svg";
+//import logo from "./logo.svg";
 import ShowTodo from "./components/show-todo.component";
 
 import Navbar from "./components/navbar.component"

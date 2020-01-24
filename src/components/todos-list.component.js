@@ -11,7 +11,6 @@ const Todo = props => (
     
 <>
 <tr>
-<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.username }</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td> 
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td> 
@@ -106,10 +105,10 @@ componentDidMount() {
              style={{ marginTop: 20 }} >                    
              <thead>                        
              <tr>
-            <th>Username</th>   
+            
              <th>Name</th>
             <th>Phone</th> 
-        <th>Email</th>                         <th>Image</th>   
+        <th>Email</th>                         <th>Image Link</th>   
              <th>Description</th> 
               
             <th>Collection Date</th>                  
