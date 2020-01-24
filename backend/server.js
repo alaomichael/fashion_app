@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const todoRoutes = express.Router();
 const userRoutes = express.Router();
 const PORT = 4000;
+const URI = 'mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority'
 let Todo = require('./models/todo.model');
 let User = require('./models/user.model');
 
@@ -22,7 +23,7 @@ app.use(bodyParser.json());
 // })
 
 //Online database
-mongoose.connect('mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(URI, { useNewUrlParser: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
 console.log("MongoDB database connection established successfully");

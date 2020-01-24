@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "homepage": "http://alao.github.io/fashion_app",
   "scripts": {
     "start": "node server.js",
-    "server": "nodemon server.js" ,"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build" 
+    "server": "nodemon server.js" ,"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build" ,
+    "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
   },
   "keywords": [],
   "author": "Alao Michael",
