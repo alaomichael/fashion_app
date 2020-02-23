@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+
 import {
        Label
     
@@ -37,9 +38,24 @@ export default class ShowTodo extends Component {
         }
     }
     componentDidMount() {
+
+        
+        // axios.get('http://localhost:4000/users/')
+        //     .then(response => {
+        //         if (response.data.length > 0) {
+        //             this.setState({
+        //                 users: response.data.map(user => user.username),
+        //                 username: response.data[0].username
+        //             })
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.log(error);
+        //     })
+
         axios.get('http://localhost:4000/todos/' + this.props.match.params.id)
             .then(response => {
-                this.setState({
+                    this.setState({
                     username: response.data.username,
                     name: response.data.name,
                     phone: response.data.phone,
@@ -84,7 +100,8 @@ export default class ShowTodo extends Component {
 <div className="form-group">
 <Label >Username: </Label>
 { `  ` }
-{ this.state.username }
+{ this.state.username}
+
 </div>
 <div className="form-group">
 <Label for='item'>Name: </Label>
@@ -213,7 +230,7 @@ name="priorityOptions"
 id="priorityLow"
 value="Low"
 checked={ this.state.todo_priority === 'Low' }
-
+readOnly="True"
 />
 
 <label className="form-check-label">Low</label>
@@ -227,7 +244,7 @@ name="priorityOptions"
 id="priorityMedium"
 value="Medium"
 checked={ this.state.todo_priority === 'Medium' }
-
+readOnly="True"
 />
 <label className="form-check-label">Medium</label>
 </div>
@@ -238,7 +255,7 @@ name="priorityOptions"
 id="priorityHigh"
 value="High"
 checked={ this.state.todo_priority === 'High' }
-
+readOnly="True"
 />
 <label className="form-check-label">High</label>
 </div>
@@ -250,7 +267,7 @@ className="form-check-input"
 id="completedCheckbox"
 type="checkbox"
 name="completedCheckbox"
-
+readOnly="True"
 checked={ this.state.todo_completed }
 value={ this.state.todo_completed }
 />

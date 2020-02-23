@@ -11,11 +11,11 @@ const Todo = props => (
     
 <>
 <tr>
+<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.username}</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td> 
 <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td> 
             <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.image }</td>          
-<td className={props.todo.todo_completed ? 'completed' : ''}>{props.todo.todo_description}</td> 
 <td>{ props.todo.date.substring(0, 10) }</td>       
 <Link to={ "/show/" + props.todo._id }>
 <Button
@@ -42,13 +42,15 @@ constructor(props) {
 super(props);
 //this.deleteExercise = this.deleteExercise.bind(this);
 this.state = {todos: [],
+    username:'',
 users:[]};
 }
 
 componentDidMount() {
     axios.get('http://localhost:4000/todos/')
         .then(response => {
-            this.setState({ todos: response.data });
+            this.setState({ todos: response.data,
+            username: response.data.username });
         })
         .catch(function (error) {
             console.log(error);
@@ -60,8 +62,7 @@ componentDidMount() {
         .then(response => {
             if (response.data.length > 0) {
                 this.setState({
-                    users: response.data.map(user => user.username),
-                    username: response.data[0].username
+                    users: response.data.map(user => user.username)
                 })
             }
         })
@@ -105,11 +106,11 @@ componentDidMount() {
              style={{ marginTop: 20 }} >                    
              <thead>                        
              <tr>
-            
-             <th>Name</th>
+            <th>Officer-in Charge</th>
+             <th>Customer's Name</th>
             <th>Phone</th> 
         <th>Email</th>                         <th>Image Link</th>   
-             <th>Description</th> 
+            
               
             <th>Collection Date</th>                  
              <th>Actions</th>                        

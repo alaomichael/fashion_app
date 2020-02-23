@@ -14,17 +14,17 @@ class App extends Component {
  render() {
        return (
          <Router>
+         <div className="container">
      <Navbar/>
       <br />
 <Route path="/" exact component={TodosList} />
-<Route path="/edit/:id" component={EditTodo} />          
-<Route path="/create" component={CreateTodo} />   
+<Route path="/edit/:id" component={EditTodo} /> 
+<Route path="/create" component={CreateTodo} /> 
 <Route path="/show/:id" component={ ShowTodo } /> 
-<Route path="/user" component={ CreateUser } />   
+<Route path="/user" component={ CreateUser } />     </div> 
       </Router>    
       );
       }
     }
       
-
   export default App;

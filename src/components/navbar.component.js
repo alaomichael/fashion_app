@@ -7,7 +7,7 @@ export default class Navbar extends Component {
     render() {
         return (
 <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
-                <a class="navbar-brand" href="https://alaomichael.github.io" target="_blank" rel="noopener noreferrer">
+                <a className="navbar-brand" href="https://alaomichael.github.io" target="_blank" rel="noopener noreferrer">
                     <img src={ logo } width="30" height="30" alt="Alao Michael" />
                 </a>
 <Link to="/" className="navbar-brand">Customer Measurement Record App</Link>

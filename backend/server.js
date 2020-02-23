@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 const todoRoutes = express.Router();
 const userRoutes = express.Router();
 const PORT = 4000;
-const URI = 'mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority'
+const URI = "mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority";
+const LOCALDB = 'mongodb://127.0.0.1:27017/fha';
 let Todo = require('./models/todo.model');
 let User = require('./models/user.model');
 
@@ -23,11 +24,27 @@ app.use(bodyParser.json());
 // })
 
 //Online database
-mongoose.connect(URI, { useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(LOCALDB, { useNewUrlParser: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', function() {
 console.log("MongoDB database connection established successfully");
 })
+
+//Allow all requests from all domains & localhost
+todoRoutes.all('/*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET,DELETE,UPDATE");
+    next();
+});
+
+//Allow all requests from all domains & localhost
+userRoutes.all('/*', function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET,DELETE,UPDATE");
+    next();
+});
 
 // User Route
 userRoutes.route('/').get((req, res) => {
@@ -133,6 +150,16 @@ res.status(400).send('adding new todo failed');
 
 app.use('/todos', todoRoutes);
 app.use('/users', userRoutes);
+
+// Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    // Set static folder
+    app.use(express.static('client/build'));
+
+    app.get('*', (req, res) => {
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 app.listen(PORT, function() {
 console.log("Server is running on Port: " + PORT);

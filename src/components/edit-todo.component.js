@@ -26,6 +26,7 @@ export default class EditTodo extends Component {
             
         this.state = {
             modal: false,
+            username:'',
             name: '',
             phone: '',
             underbust: '',
@@ -54,8 +55,8 @@ export default class EditTodo extends Component {
     }    
     componentDidMount() {        
         axios.get('http://localhost:4000/todos/'+this.props.match.params.id)            
-        .then(response => {                
-            this.setState({ 
+        .then(response => { 
+                this.setState({ 
                 username: response.data.username,
                 name: response.data.name,
                 phone: response.data.phone,
@@ -90,7 +91,7 @@ export default class EditTodo extends Component {
             .then(response => {
                 if (response.data.length > 0) {
                     this.setState({
-                        users: response.data.map(user => user.username),
+                        users: response.data.map(user => user.username)
                     })
                 }
             })

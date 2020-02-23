@@ -1,8 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 let Todo = new Schema({
-
-    
+    username: {
+type: String
+},
+ users: {
+type: Array
+},
     name: {
 type: String,required: true
 },
