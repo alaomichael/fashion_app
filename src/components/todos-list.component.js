@@ -8,42 +8,46 @@ import { Button} from 'reactstrap';
 // <a href="#" onClick={props.onDeleteClick.bind(this,props.todo._id) }>Delete</a>
  
 const Todo = props => (  
-    
-<>
-<tr>
-<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.username}</td>
-<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
-<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td> 
-<td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td> 
-            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.image }</td>          
-<td>{ props.todo.date.substring(0, 10) }</td>       
-<Link to={ "/show/" + props.todo._id }>
-<Button
-className="btn btn-success"
->Show</Button>
-</Link> 
-{ ` | ` }           
-<Link to={"/edit/"+props.todo._id}>
-<Button className='btn btn-primary'
->Edit</Button>
-</Link>
-{ ` | ` }
-<Button 
-className='btn btn-danger' 
-onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
-   
-</tr>
-</>
-    )
+       <>
+         <tr>
+            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.username }</td>
+            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
+            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td>
+            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td>
+            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.image }</td>
+            <td>{ props.todo.date.substring(0, 10) }</td>
+            <Link to={ "/show/" + props.todo._id }>
+                <Button
+                    className="btn btn-success"
+                >Show</Button>
+            </Link>
+            { ` | ` }
+            <Link to={ "/edit/" + props.todo._id }>
+                <Button className='btn btn-primary'
+                >Edit</Button>
+            </Link>
+            { ` | ` }
+            <Button
+                className='btn btn-danger'
+                onClick={ props.onDeleteClick.bind(this, props.todo._id) } >Delete</Button>
+
+        </tr>
+    </>
+   )
 
 export default class TodosList extends Component {
 
 constructor(props) {
 super(props);
 //this.deleteExercise = this.deleteExercise.bind(this);
-this.state = {todos: [],
+this.state = {
+    todos: [],
     username:'',
-users:[]};
+    users:[]
+};
+console.log(props);
+
+
 }
 
 componentDidMount() {
@@ -104,22 +108,18 @@ componentDidMount() {
              <h3>Customers List</h3>                
              <table className="table table-striped" 
              style={{ marginTop: 20 }} >                    
-             <thead>                        
-             <tr>
+             <thead>                                       
             <th>Officer-in Charge</th>
              <th>Customer's Name</th>
             <th>Phone</th> 
-        <th>Email</th>                         <th>Image Link</th>   
-            
-              
+        <th>Email</th>                         
+        <th>Image Link</th>     
             <th>Collection Date</th>                  
-             <th>Actions</th>                        
-             </tr>                    
-             </thead>                    
+             <th>Actions</th> 
+             </thead>                                             
              <tbody>
-                         
              { this.todoList() } 
-             </tbody>                
+             </tbody>          
              </table>            
              </div>        
              )    
