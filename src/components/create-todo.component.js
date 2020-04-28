@@ -411,7 +411,7 @@ type='file'
 name='image'
 id='image'
 placeholder='Add Chosen Style Picture'
-onChange={this.onChange}
+onChange={this.handleImageChange}
 />
 
 

@@ -186,7 +186,10 @@ onChangeTodoCompleted(e) {
 
 
     onSubmit(e) {        
-e.preventDefault();        
+e.preventDefault();  
+
+this.handleUpload();
+
 const obj = {   
     username: this.state.username,  
     name: this.state.name,
@@ -398,7 +401,7 @@ type='file'
 name='image'
 id='image'
 
-onChange={ this.onChange }
+onChange={ this.handleImageChange }
 />
 <div className="form-group">
 <label>Collection Date: </label>
@@ -476,7 +479,7 @@ value={ this.state.todo_completed }
 </div>
 
 <div className="form-group">
-<input type="submit"  onClick={this.handleUpload}  value="Update Data" className="btn btn-success" />
+<input type="submit" value="Update Data" className="btn btn-success" />
 </div>
 </FormGroup>
 </Form>

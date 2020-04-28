@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button} from 'reactstrap';
-import { storage } from '../config/firebaseConfig'
+
 
 
 // Todo functional Component, that is passed into TodosList Class Component
