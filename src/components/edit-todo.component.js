@@ -12,7 +12,7 @@ import {
 } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
-
+import { storage } from '../config/firebaseConfig'
 export default class EditTodo extends Component {    
     constructor(props) {        
         super(props);   
@@ -45,6 +45,7 @@ export default class EditTodo extends Component {
             email: '',
             bust: '', 
             image:'',
+            url: '',
             date:new Date(),           
             todo_description: '',            
             todo_responsible: '',            
@@ -76,6 +77,7 @@ export default class EditTodo extends Component {
                 skirt_waist: response.data.skirt_waist,
                 bust: response.data.bust,
                 image:response.data.image, 
+                url:response.data.url, 
                 date:new Date(response.data.date),             todo_description: response.data.todo_description,  
                 todo_responsible: response.data.todo_responsible,  
                 todo_priority: response.data.todo_priority,        
@@ -149,6 +151,39 @@ onChangeTodoCompleted(e) {
         });
     };
 
+     handleImageChange = e => {
+        if (e.target.files[0]) {
+            const image = e.target.files[0];
+            this.setState(() => ({image}));
+        }
+    }
+
+
+    handleUpload = () => {
+            const {image} =this.state;
+            const uploadTask = storage.ref(`images/styles/${image.name}`).put(image);
+            uploadTask.on('state_change',
+            (snapshot) => {
+                // progress function
+                console.log(snapshot);
+                
+            },
+            (error) => {
+                // Error function
+                console.log(error);
+                
+            },
+            () => {
+                // complete function
+                storage.ref('images/styles').child(image.name).getDownloadURL.then(url => {
+                    this.setState({url});
+                })
+            }
+            )
+        
+    }
+
+
 
     onSubmit(e) {        
 e.preventDefault();        
@@ -172,6 +207,7 @@ const obj = {
     skirt_waist: this.state.skirt_waist,
     bust: this.state.bust,
     image:this.state.image,  
+    url:this.state.url,
     date: this.state.date,
     todo_description: this.state.todo_description,            
     todo_responsible: this.state.todo_responsible,            
@@ -189,12 +225,12 @@ const obj = {
         return (            
 
 <div style={ { marginTop: 10 } }>
-                <h4 align="center"><Button
-                    color='dark'
-                    style={ { marginBottom: '2rem' } }
-                    onClick={ this.toggle }
-                >
-                    Update Customer Data
+<h4 align="center"><Button
+color='dark'
+style={ { marginBottom: '2rem' } }
+onClick={ this.toggle }
+>
+Update Customer Data
 </Button></h4>  
 
 <Modal isOpen={ this.state.modal } toggle={ this.toggle }>
@@ -356,14 +392,14 @@ id='round_sleeve'
 value={ this.state.round_sleeve }
 onChange={ this.onChange }
 />
-                                <Label for='image'>Picture: </Label>
-                                <Input
-                                    type='file'
-                                    name='image'
-                                    id='image'
-                                    
-                                    onChange={ this.onChange }
-                                />
+<Label for='image'>Picture: </Label>
+<Input
+type='file'
+name='image'
+id='image'
+
+onChange={ this.onChange }
+/>
 <div className="form-group">
 <label>Collection Date: </label>
 <div>
@@ -440,7 +476,7 @@ value={ this.state.todo_completed }
 </div>
 
 <div className="form-group">
-<input type="submit" value="Update Data" className="btn btn-success" />
+<input type="submit"  onClick={this.handleUpload}  value="Update Data" className="btn btn-success" />
 </div>
 </FormGroup>
 </Form>

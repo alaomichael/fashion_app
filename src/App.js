@@ -10,6 +10,7 @@ import ShowTodo from "./components/show-todo.component";
 import Navbar from "./components/navbar.component"
 import CreateUser from "./components/create-user.components";
 
+
 class App extends Component {
  render() {
        return (
@@ -21,7 +22,9 @@ class App extends Component {
 <Route path="/edit/:id" component={EditTodo} /> 
 <Route path="/create" component={CreateTodo} /> 
 <Route path="/show/:id" component={ ShowTodo } /> 
-<Route path="/user" component={ CreateUser } />     </div> 
+<Route path="/user" component={ CreateUser } />     
+
+</div> 
       </Router>    
       );
       }

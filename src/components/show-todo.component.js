@@ -31,6 +31,8 @@ export default class ShowTodo extends Component {
             email: '',
             bust: '',
             date: '',
+            image: '',
+            url: '',
             todo_description: '',
             todo_responsible: '',
             todo_priority: '',
@@ -74,7 +76,9 @@ export default class ShowTodo extends Component {
                     blouse_length: response.data.blouse_length,
                     skirt_waist: response.data.skirt_waist,
                     bust: response.data.bust,
-                    date: response.data.date, 
+                    date: response.data.date,
+                    image: response.data.image, 
+                    url: response.data.url, 
                     todo_description: response.data.todo_description,
                     todo_responsible: response.data.todo_responsible,
                     todo_priority: response.data.todo_priority,
@@ -199,9 +203,9 @@ export default class ShowTodo extends Component {
 { this.state.round_sleeve }
 
 </div>
-<Label for='image'>Picture: </Label>
+<Label for='url'>Picture: </Label>
 { `  ` }
-{ this.state.image }
+{ this.state.url }
 
 <div className="form-group">
 <Label for='date'>Collection Date: </Label>

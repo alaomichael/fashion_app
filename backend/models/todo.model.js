@@ -59,7 +59,7 @@ type: Array
     bust: {
         type: Number
     },
-    image: {
+    file: {
         type: String
     },
     todo_description: {

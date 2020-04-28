@@ -58,6 +58,9 @@ type: Number
     bust: {
 type: Number
 }, 
+file: {
+type: String
+},
 todo_description: {
 type: String
 },

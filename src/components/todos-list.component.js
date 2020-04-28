@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Button} from 'reactstrap';
+import { storage } from '../config/firebaseConfig'
+
 
 // Todo functional Component, that is passed into TodosList Class Component
 //  A link to delete todo item
@@ -14,7 +16,12 @@ const Todo = props => (
             <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.name }</td>
             <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.phone }</td>
             <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.email }</td>
-            <td className={ props.todo.todo_completed ? 'completed' : '' }>{ props.todo.image }</td>
+            <td className={ props.todo.todo_completed ? 'completed' : '' }>
+            <img src={props.todo.url || 'https://via.placeholder.com/150' } alt="Uploaded Style" height="150" width="150" />
+            </td>
+            
+
+
             <td>{ props.todo.date.substring(0, 10) }</td>
             <Link to={ "/show/" + props.todo._id }>
                 <Button

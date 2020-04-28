@@ -12,6 +12,9 @@ import {
 } from 'reactstrap';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { storage } from '../config/firebaseConfig'
+
+
 export default class CreateList extends Component {
 
     constructor(props) {
@@ -46,6 +49,7 @@ export default class CreateList extends Component {
             bust: '' , 
             date: new Date(),
             image:null,
+            url: '',
             todo_description: '',
             todo_responsible: '',
             todo_priority: '',
@@ -111,7 +115,39 @@ export default class CreateList extends Component {
         this.setState({
             modal: !this.state.modal
         });
-    };
+    }; 
+
+    handleImageChange = e => {
+        if (e.target.files[0]) {
+            const image = e.target.files[0];
+            this.setState(() => ({image}));
+        }
+    }
+
+
+    handleUpload = () => {
+            const {image} =this.state;
+            const uploadTask = storage.ref(`images/styles/${image.name}`).put(image);
+            uploadTask.on('state_change',
+            (snapshot) => {
+                // progress function
+                console.log(snapshot);
+                
+            },
+            (error) => {
+                // Error function
+                console.log(error);
+                
+            },
+            () => {
+                // complete function
+                storage.ref('images/styles').child(image.name).getDownloadURL.then(url => {
+                    this.setState({url});
+                })
+            }
+            )
+        
+    }
 
    onSubmit(e) {
 e.preventDefault();
@@ -120,7 +156,10 @@ console.log(`Form submitted: True`);
 console.log(`Todo Description: ${this.state.todo_description}`);
 console.log(`Todo Responsible: ${this.state.todo_responsible}`);
 console.log(`Todo Priority: ${this.state.todo_priority}`);
+console.log(`Todo Priority: ${this.state.url}`);
 console.log(`Todo Created on: ${Date.now}`);
+
+this.handleUpload();  
 
 const newTodo = {
     username: this.state.username,
@@ -142,7 +181,8 @@ const newTodo = {
     skirt_waist: this.state.skirt_waist,
     bust: this.state.bust,
     date: this.state.date, 
-    image:this.state.image,   
+    image:this.state.image,
+    url:this.state.url,     
 todo_description: this.state.todo_description,
 todo_responsible: this.state.todo_responsible,
 todo_priority: this.state.todo_priority,
@@ -179,6 +219,7 @@ this.setState({
     bust: ''  ,
     date:'',
     image:null,
+    url:'',
 todo_description: '',
 todo_responsible: '',
 todo_priority: '',
@@ -370,8 +411,10 @@ type='file'
 name='image'
 id='image'
 placeholder='Add Chosen Style Picture'
-onChange={ this.onChange }
+onChange={this.onChange}
 />
+
+
 <div className="form-group">
 <label>Collection Date: </label>
 <div>
@@ -434,7 +477,7 @@ onChange={ this.onChangeTodoPriority }
 </div>                    
 </div>                    
 <div className="form-group">                        
-<input type="submit" value="Create Todo" className="btn btn-success" />                    
+<input type="submit"  value="Create Todo" className="btn btn-success" />                    
 </div>                
 </FormGroup>
 </Form>
