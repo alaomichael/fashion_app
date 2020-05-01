@@ -203,9 +203,11 @@ export default class ShowTodo extends Component {
 { this.state.round_sleeve }
 
 </div>
+<div className="form-group">
 <Label for='url'>Picture: </Label>
 { `  ` }
-{ this.state.url }
+{ this.state.image && <img src={ this.state.url } /> }
+</div>
 
 <div className="form-group">
 <Label for='date'>Collection Date: </Label>

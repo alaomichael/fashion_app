@@ -2,13 +2,15 @@ import React, { Component } from 'react'
 import { storage } from '../config/firebaseConfig'
 
 class ImageUpload extends Component {
+
+   
     constructor(props) {
         super(props);
-
-        this.state = {
+           this.state = {
             image: null,
             url: ''
         }
+
 this.handleChange = this.handleChange.bind(this);
        this.handleUpload = this.handleUpload.bind(this);
     }
@@ -48,7 +50,13 @@ this.handleChange = this.handleChange.bind(this);
     render() {
         return (
             <div>
-            <input type="file" onChange={this.handleChange} />
+            <input type="file"
+            name='image'
+        id='image'
+        accept="image/*" multiple = "false"
+        placeholder='Add Chosen Style Picture'
+        onChange={this.handleChange} />
+        
             <button onClick={this.handleUpload} >Upload</button>
             <br/>
             <img src={this.state.url || 'https://via.placeholder.com/150' } alt="Uploaded Style" height="150" width="150" />

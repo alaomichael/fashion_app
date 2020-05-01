@@ -13,10 +13,12 @@ import {
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { storage } from '../config/firebaseConfig'
+import FileUploader from 'react-firebase-file-uploader';
+import firebase from 'firebase';
+//import ImageUpload from './imageUpload';
 
 
 export default class CreateList extends Component {
-
     constructor(props) {
         super(props);
 
@@ -26,7 +28,10 @@ export default class CreateList extends Component {
         this.onChangeUsername = this.onChangeUsername.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-
+        
+this.handleChange = this.handleChange.bind(this);
+       this.handleUpload = this.handleUpload.bind(this);
+       
         this.state = {
             modal: false,
             username: '',
@@ -54,10 +59,9 @@ export default class CreateList extends Component {
             todo_responsible: '',
             todo_priority: '',
             todo_completed: false,
-            users: []
+            users: [] }
         }
-
-    }
+    
 
     componentDidMount(){
         this.toggle();
@@ -117,15 +121,60 @@ export default class CreateList extends Component {
         });
     }; 
 
-    handleImageChange = e => {
+    // handleImageChange = e => {
+    //     if (e.target.files[0]) {
+    //         const image = e.target.files[0];
+    //         this.setState(() => ({image}));
+    //     }
+    // }
+
+
+    // handleUpload = () => {
+          
+    //         const {image} =this.state;
+    //         const uploadTask = storage.ref(`images/styles/${image.name}`).put(image);
+    //         uploadTask.on('state_change',
+    //         (snapshot) => {
+    //             // progress function
+    //             console.log(snapshot);
+                
+    //         },
+    //         (error) => {
+    //             // Error function
+    //             console.log(error);
+                
+    //         },
+    //         () => {
+    //             // complete function
+    //             storage.ref('images/styles').child(image.name).getDownloadURL.then(url => {
+    //                 this.setState({url});
+    //             })
+    //         }
+    //         )
+        
+    // }
+
+    handleUploadSuccess = filename => {
+        this.setState({
+            image: filename,
+            progress: 100
+        })
+
+        firebase.storage().ref('avatars').child(filename).getDownloadURL()
+            .then(url => this.setState({
+                url: url
+            }))
+    }
+
+
+         handleChange = e => {
         if (e.target.files[0]) {
             const image = e.target.files[0];
             this.setState(() => ({image}));
         }
     }
 
-
-    handleUpload = () => {
+     handleUpload = () => {
             const {image} =this.state;
             const uploadTask = storage.ref(`images/styles/${image.name}`).put(image);
             uploadTask.on('state_change',
@@ -142,6 +191,7 @@ export default class CreateList extends Component {
             () => {
                 // complete function
                 storage.ref('images/styles').child(image.name).getDownloadURL.then(url => {
+                    console.log(url);
                     this.setState({url});
                 })
             }
@@ -149,18 +199,18 @@ export default class CreateList extends Component {
         
     }
 
-   onSubmit(e) {
+
+   onSubmit(e) {       
 e.preventDefault();
 
 console.log(`Form submitted: True`);
 console.log(`Todo Description: ${this.state.todo_description}`);
 console.log(`Todo Responsible: ${this.state.todo_responsible}`);
 console.log(`Todo Priority: ${this.state.todo_priority}`);
-console.log(`Todo Priority: ${this.state.url}`);
+console.log(`Todo Url: ${this.state.url}`);
+console.log(`Todo Image name: ${this.state.image}`);
 console.log(`Todo Created on: ${Date.now}`);
-
-this.handleUpload();  
-
+ 
 const newTodo = {
     username: this.state.username,
     name: this.state.name,
@@ -183,11 +233,11 @@ const newTodo = {
     date: this.state.date, 
     image:this.state.image,
     url:this.state.url,     
-todo_description: this.state.todo_description,
-todo_responsible: this.state.todo_responsible,
-todo_priority: this.state.todo_priority,
-todo_completed: this.state.todo_completed,
-users:this.state.users
+    todo_description: this.state.todo_description,
+    todo_responsible: this.state.todo_responsible,
+    todo_priority: this.state.todo_priority,
+    todo_completed: this.state.todo_completed,
+    users:this.state.users
 };
 
        axios.post('http://localhost:4000/todos/add', newTodo)
@@ -233,6 +283,9 @@ window.location = '/';
 //this.props.history.push('/');
 
 }
+
+
+
     render() {
         return (
 <div style={ { marginTop: 10 } }>
@@ -249,7 +302,7 @@ Add Customer Data
 <Modal isOpen={ this.state.modal } toggle={ this.toggle }>
 <ModalHeader toggle={ this.toggle }>Add Customer Data</ModalHeader>
 <ModalBody>
-<Form onSubmit={ this.onSubmit }>
+<Form onSubmit={ this.onSubmit }  >
 <FormGroup>
 <div className="form-group">
 <label>Username: </label>
@@ -405,15 +458,18 @@ id='round_sleeve'
 placeholder='Add Customer Round Sleeve'
 onChange={ this.onChange }
 />
-<Label for='image'>Picture: </Label>
-<Input
-type='file'
-name='image'
-id='image'
-placeholder='Add Chosen Style Picture'
-onChange={this.handleImageChange}
-/>
 
+<div className="form-group">
+<Label for='image'>Picture:  </Label>
+</div>
+{ this.state.image && <img src={ this.state.url } /> }
+<br />
+<FileUploader
+accept="image/*"
+name="image"
+storageRef={ firebase.storage().ref('avatars') }
+onUploadSuccess={ this.handleUploadSuccess }
+/>
 
 <div className="form-group">
 <label>Collection Date: </label>
@@ -476,8 +532,9 @@ onChange={ this.onChangeTodoPriority }
 <label className="form-check-label">High</label>                        
 </div>                    
 </div>                    
-<div className="form-group">                        
-<input type="submit"  value="Create Todo" className="btn btn-success" />                    
+<div className="form-group"> 
+<input type="submit" value="Create Measurement" className="btn btn-success" /> 
+                   
 </div>                
 </FormGroup>
 </Form>
@@ -486,4 +543,4 @@ onChange={ this.onChangeTodoPriority }
                     </div>        
                     )    
                 }
-            }
+            } 

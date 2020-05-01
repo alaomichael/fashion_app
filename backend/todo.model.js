@@ -58,7 +58,10 @@ type: Number
     bust: {
 type: Number
 }, 
-file: {
+image: {
+type: String
+},
+url: {
 type: String
 },
 todo_description: {

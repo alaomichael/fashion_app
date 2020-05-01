@@ -13,6 +13,8 @@ import {
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 import { storage } from '../config/firebaseConfig'
+import FileUploader from 'react-firebase-file-uploader';
+import firebase from 'firebase';
 export default class EditTodo extends Component {    
     constructor(props) {        
         super(props);   
@@ -22,7 +24,10 @@ export default class EditTodo extends Component {
     this.onChangeTodoPriority = this.onChangeTodoPriority.bind(this);        
     this.onChangeTodoCompleted = this.onChangeTodoCompleted.bind(this); 
         this.onChangeDate = this.onChangeDate.bind(this);       
-    this.onSubmit = this.onSubmit.bind(this);        
+    this.onSubmit = this.onSubmit.bind(this);
+    
+        this.handleChange = this.handleChange.bind(this);
+          this.handleUpload = this.handleUpload.bind(this);     
             
         this.state = {
             modal: false,
@@ -44,7 +49,7 @@ export default class EditTodo extends Component {
             skirt_waist: '',
             email: '',
             bust: '', 
-            image:'',
+            image:null,
             url: '',
             date:new Date(),           
             todo_description: '',            
@@ -120,6 +125,27 @@ openModal = ()=> {
         this.toggle();
    
 }
+
+//To show uploaded style
+    handleUploadSuccess = filename => {
+        this.setState({
+            image: filename,
+            progress: 100
+        })
+
+        firebase.storage().ref('avatars').child(filename).getDownloadURL()
+            .then(url => this.setState({
+                url: url
+            }))
+    }
+
+    handleChange = e => {
+        if (e.target.files[0]) {
+            const image = e.target.files[0];
+            this.setState(() => ({ image }));
+        }
+    }
+
 onChangeTodoDescription(e) {        
 this.setState({            
     todo_description: e.target.value
@@ -187,8 +213,6 @@ onChangeTodoCompleted(e) {
 
     onSubmit(e) {        
 e.preventDefault();  
-
-this.handleUpload();
 
 const obj = {   
     username: this.state.username,  
@@ -395,14 +419,19 @@ id='round_sleeve'
 value={ this.state.round_sleeve }
 onChange={ this.onChange }
 />
-<Label for='image'>Picture: </Label>
-<Input
-type='file'
-name='image'
-id='image'
 
-onChange={ this.handleImageChange }
+<div className="form-group">
+<Label for='image'>Picture:  </Label>
+</div>
+{ this.state.image && <img src={ this.state.url } /> }
+<br />
+<FileUploader
+accept="image/*"
+name="image"
+storageRef={ firebase.storage().ref('avatars') }
+onUploadSuccess={ this.handleUploadSuccess }
 />
+
 <div className="form-group">
 <label>Collection Date: </label>
 <div>
