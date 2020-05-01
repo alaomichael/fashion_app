@@ -2,11 +2,11 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const MongoClient = require('mongodb').MongoClient;
 const todoRoutes = express.Router();
 const userRoutes = express.Router();
 const PORT = 4000;
-const URI = "mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority";
+//const URI = "mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority";
 const LOCALDB = 'mongodb://127.0.0.1:27017/fha';
 let Todo = require('./models/todo.model');
 let User = require('./models/user.model');
@@ -25,11 +25,19 @@ app.use(bodyParser.json());
 
 
 //Online database
-mongoose.connect(URI, { useNewUrlParser: true, useCreateIndex: true });
-const connection = mongoose.connection;
-connection.once('open', function() {
-console.log("MongoDB database connection established successfully");
-})
+//mongoose.connect(URI, { useNewUrlParser: true, useCreateIndex: true });
+//const connection = mongoose.connection;
+//connection.once('open', function() {
+//console.log("MongoDB database connection established successfully");
+//})
+
+const uri = "mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true });
+client.connect(err => {
+  const collection = client.db("measurement").collection("customer");
+  // perform actions on the collection object
+  client.close();
+});
 
 //Allow all requests from all domains & localhost
 todoRoutes.all('/*', function (req, res, next) {
