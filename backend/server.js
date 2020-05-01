@@ -34,8 +34,14 @@ app.use(bodyParser.json());
 const uri = "mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
-  const collection = client.db("measurement").collection("customer");
+  //const connection = MongoClient.connection;
+  client.once('open', function() {
+console.log("MongoDB database connection established successfully");
+})
+  const collection = client.db("test").collection("devices");
   // perform actions on the collection object
+
+
   client.close();
 });
 
@@ -139,7 +145,7 @@ todo.todo_responsible = req.body.todo_responsible;
 todo.todo_priority = req.body.todo_priority;
 todo.todo_completed = req.body.todo_completed;
 todo.save().then(todo => {
-res.json('Todo updated!');
+res.json('Database updated!');
 })
 .catch(err => {
 res.status(400).send("Update not possible");
@@ -151,10 +157,10 @@ todoRoutes.route('/add').post(function(req, res) {
 let todo = new Todo(req.body);
 todo.save()
 .then(todo => {
-res.status(200).json({'todo': 'Todo added successfully'});
+res.status(200).json({'todo': 'Customer details added successfully'});
 })
 .catch(err => {
-res.status(400).send('adding new todo failed');
+res.status(400).send('adding new customer data failed');
 });
 });
 
