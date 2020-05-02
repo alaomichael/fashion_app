@@ -31,17 +31,12 @@ app.use(bodyParser.json());
 //console.log("MongoDB database connection established successfully");
 //})
 
-const uri = "mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority";
+const MongoClient = require('mongodb').MongoClient;
+const uri = "mongodb+srv://michael:babatunde_2@awsusacluster-1qgt4.mongodb.net/test?retryWrites=true&w=majority";
 const client = new MongoClient(uri, { useNewUrlParser: true });
 client.connect(err => {
-  //const connection = MongoClient.connection;
-  client.once('open', function() {
-console.log("MongoDB database connection established successfully");
-})
-  const collection = client.db("test").collection("devices");
+  const collection = client.db("customer_details").collection("users");
   // perform actions on the collection object
-
-
   client.close();
 });
 
