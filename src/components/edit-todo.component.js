@@ -423,7 +423,7 @@ onChange={ this.onChange }
 <div className="form-group">
 <Label for='image'>Picture:  </Label>
 </div>
-{ this.state.image && <img src={ this.state.url } /> }
+{ this.state.image && <img src={ this.state.url } height="150" width="150"/> }
 <br />
 <FileUploader
 accept="image/*"

@@ -283,9 +283,6 @@ window.location = '/';
 //this.props.history.push('/');
 
 }
-
-
-
     render() {
         return (
 <div style={ { marginTop: 10 } }>
@@ -462,7 +459,7 @@ onChange={ this.onChange }
 <div className="form-group">
 <Label for='image'>Picture:  </Label>
 </div>
-{ this.state.image && <img src={ this.state.url } /> }
+{ this.state.image && <img src={ this.state.url }  height="100" width="100" /> }
 <br />
 <FileUploader
 accept="image/*"

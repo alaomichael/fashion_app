@@ -206,7 +206,7 @@ export default class ShowTodo extends Component {
 <div className="form-group">
 <Label for='url'>Picture: </Label>
 { `  ` }
-{ this.state.image && <img src={ this.state.url } /> }
+{ this.state.image && <img src={ this.state.url } height="150" width="150" /> }
 </div>
 
 <div className="form-group">

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from "../logo.svg";
+import SignedInLinks from './SignedInLinks'
+import SignedOutLinks from './SignedOutLinks'
 
 export default class Navbar extends Component {
 
@@ -22,6 +24,8 @@ export default class Navbar extends Component {
 <li className="navbar-item">
 <Link to="/" className="nav-link">Customers Data</Link>
 </li>
+<SignedInLinks />
+<SignedOutLinks />
 </ul>
 </div>
 </nav>

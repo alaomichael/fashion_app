@@ -8,7 +8,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ShowTodo from "./components/show-todo.component";
 import Navbar from "./components/navbar.component"
 import CreateUser from "./components/create-user.components";
-
+import SignIn from './components/SignIn'
+import SignUp from "./components/SignUp";
 
 class App extends Component {
  render() {
@@ -22,6 +23,8 @@ class App extends Component {
 <Route path="/create" component={CreateTodo} /> 
 <Route path="/show/:id" component={ ShowTodo } /> 
 <Route path="/user" component={ CreateUser } />     
+<Route path="/signin" component={ SignIn} />  
+<Route path="/signup" component={ SignUp } />   
 </div> 
 
       </Router>    
