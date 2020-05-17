@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
-<<<<<<< HEAD
 const mongoose = require('mongoose');
 
 // const MongoClient = require('mongodb').MongoClient;
@@ -17,13 +16,6 @@ const todoRoutes = express.Router();
 const userRoutes = express.Router();
 const PORT = 4000;
 const URI = "mongodb+srv://alaomichael:babatunde2@measurementcluster-op09y.gcp.mongodb.net/test?retryWrites=true&w=majority";
-=======
-const MongoClient = require('mongodb').MongoClient;
-const todoRoutes = express.Router();
-const userRoutes = express.Router();
-const PORT = 4000;
-//const URI = "mongodb+srv://alaomichael:babatunde_2@measurement1-zsaz7.gcp.mongodb.net/test?retryWrites=true&w=majority";
->>>>>>> eaef5a66f0d3043a5da89249df6a4d2b33161f88
 const LOCALDB = 'mongodb://127.0.0.1:27017/fha';
 let Todo = require('./models/todo.model');
 let User = require('./models/user.model');
@@ -42,28 +34,11 @@ app.use(bodyParser.json());
 
 
 //Online database
-<<<<<<< HEAD
 mongoose.connect(URI, { useNewUrlParser: true, useCreateIndex: true });
 const connection = mongoose.connection;
 connection.once('open', function () {
     console.log("MongoDB database connection established successfully");
 })
-=======
-//mongoose.connect(URI, { useNewUrlParser: true, useCreateIndex: true });
-//const connection = mongoose.connection;
-//connection.once('open', function() {
-//console.log("MongoDB database connection established successfully");
-//})
-
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://michael:babatunde_2@awsusacluster-1qgt4.mongodb.net/test?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true });
-client.connect(err => {
-  const collection = client.db("customer_details").collection("users");
-  // perform actions on the collection object
-  client.close();
-});
->>>>>>> eaef5a66f0d3043a5da89249df6a4d2b33161f88
 
 //Allow all requests from all domains & localhost
 todoRoutes.all('/*', function (req, res, next) {
@@ -134,7 +109,6 @@ todoRoutes.route('/delete/:id').delete(function (req, res) {
 });
 
 
-<<<<<<< HEAD
 todoRoutes.route('/update/:id').post(function (req, res) {
     Todo.findById(req.params.id, function (err, todo) {
         if (!todo)
@@ -183,56 +157,6 @@ todoRoutes.route('/add').post(function (req, res) {
         .catch(err => {
             res.status(400).send('adding new todo failed');
         });
-=======
-todoRoutes.route('/update/:id').post(function(req, res) {
-Todo.findById(req.params.id, function(err, todo) {
-if (!todo)
-res.status(404).send("data is not found");
-else
-todo.username = req.body.username;
-todo.name = req.body.name;
-todo.phone = req.body.phone;
-todo.email = req.body.email;
-todo.underbust = req.body.underbust;
-todo.hip = req.body.hip;
-todo.length = req.body.length;
-todo.waist = req.body.waist;
-todo.sleeve = req.body.sleeve;
-todo.round_sleeve = req.body.round_sleeve;
-todo.nip = req.body.nip;
-todo.stk = req.body.stk;
-todo.shoulder = req.body.shoulder;
-todo.gown_length = req.body.gown_length;
-todo.skirt_length = req.body.skirt_length;
-todo.blouse_length = req.body.blouse_length;
-todo.skirt_waist = req.body.skirt_waist;
-todo.bust = req.body.bust;
-todo.image = req.body.image;
-todo.url = req.body.url;
-todo.date = Date.parse(req.body.date);
-todo.todo_description = req.body.todo_description;
-todo.todo_responsible = req.body.todo_responsible;
-todo.todo_priority = req.body.todo_priority;
-todo.todo_completed = req.body.todo_completed;
-todo.save().then(todo => {
-res.json('Database updated!');
-})
-.catch(err => {
-res.status(400).send("Update not possible");
-});
-});
-});
-
-todoRoutes.route('/add').post(function(req, res) {
-let todo = new Todo(req.body);
-todo.save()
-.then(todo => {
-res.status(200).json({'todo': 'Customer details added successfully'});
-})
-.catch(err => {
-res.status(400).send('adding new customer data failed');
-});
->>>>>>> eaef5a66f0d3043a5da89249df6a4d2b33161f88
 });
 
 app.use('/todos', todoRoutes);
@@ -248,12 +172,6 @@ if (process.env.NODE_ENV === 'production') {
     });
 }
 
-<<<<<<< HEAD
 app.listen(PORT, function () {
     console.log("Server is running on Port: " + PORT);
 });
-=======
-app.listen(PORT, function() {
-console.log("Server is running on Port: " + PORT);
-});
->>>>>>> eaef5a66f0d3043a5da89249df6a4d2b33161f88
