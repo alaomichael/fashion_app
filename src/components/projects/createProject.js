@@ -412,7 +412,7 @@ onChange={ this.onChange }
 </div>
 
 <div className="form-group">
-<Label for='image'>Picture:  </Label>
+<Label for='image'>Style:  </Label>
 </div>
 { this.state.image && <img src={ this.state.url }  height="100" width="100" /> }
 <br />
@@ -480,7 +480,7 @@ onChange={ this.onChangeTodoDescription }
 </div>
 
 <div className="input-field">
-<label>Responsible: </label>
+<label>Person-in-Charge: </label>
 <input type="text" 
 className="form-control"
 value={ this.state.todo_responsible }

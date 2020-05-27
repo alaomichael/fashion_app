@@ -3,13 +3,16 @@ export const updateProject = (project) => {
         // make async call to database
         const firestore = getFirestore();
 // const authorId = getState().firebase.auth.uid;
-        firestore.collection('projects/' + project.id).update({
-            ...project,
-             
-    name: this.state.name,
-    phone: this.state.phone
+const updated_project = {
+name: project.name,
+    phone: project.phone,
+    title: project.title
+}
+        firestore.collection('projects').doc(project.id).update({
+    updated_project
 
         }).then(() => {
+            console.log('Updated successfully.');
             dispatch({ type: 'UPDATE_PROJECT', project });
         }).catch((err) => {
             dispatch({ type: 'UPDATE_PROJECT_ERROR', err });
@@ -17,3 +20,12 @@ export const updateProject = (project) => {
 
     }
 };
+
+// db.collection("users")
+// .doc("3P86VJxcpBK0D0lsAyYx")
+// .update(
+//     {
+//         name: "Anbu Selvan",
+//         email: "anbu.selvan@email.com",
+//     },
+// );

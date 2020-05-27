@@ -40,7 +40,7 @@ const ProjectDetails = (props) => {
 </div>      
     <h5 className="center"> Extra Information</h5>
     <h5>Style Description: { project.todo_description }</h5>
-    <h5>Officer-in-Charge: { project.todo_responsible }</h5>
+    <h5>Person-in-Charge: { project.todo_responsible }</h5>
     <h5>Prority Level: { project.todo_priority }</h5>
 <h5>Completed:
 { project.todo_completed }</h5>

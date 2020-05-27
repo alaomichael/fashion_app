@@ -21,6 +21,17 @@ class SignUp extends Component {
         firstName: '',
         lastName: ''
     }
+
+    componentDidMount() {
+        this.toggle();
+    }
+
+
+    toggle = () => {
+        this.setState({
+            modal: !this.state.modal
+        });
+    };
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -31,16 +42,31 @@ class SignUp extends Component {
         e.preventDefault();
 
         this.props.signUp(this.state);
+        // Close modal
+        this.toggle();
     }
     render() {
         const { auth, authError } = this.props;
         // Redirect to the signin page if user has not login
         if (auth.uid) return <Redirect to='/' />
         return (
+            <div style={ { marginTop: 10 } }>
+                <h4 align="center" >
+                    <Button
+                        color='dark'
+                        style={ { marginBottom: '2rem' } }
+                        onClick={ this.toggle }
+                    >
+                        Sign Up
+</Button>
+                </h4>
 
+            <Modal isOpen={ this.state.modal } toggle={ this.toggle }>
+                <ModalHeader toggle={ this.toggle } className="grey-text text-darken-3">Sign Up</ModalHeader>
+                <ModalBody>
 <Form onSubmit={ this.handleSubmit } className="container">
 <FormGroup>
-  <h5 className="grey-text text-darken-3"> Sign Up</h5>
+                                <h5 className="grey-text text-darken-3"> Sign Up</h5>
                     <div className="input-field">
                         <Label htmlFor="firstName">First Name</Label>
                         <Input type="text" id="firstName" onChange={ this.handleChange } required />
@@ -70,6 +96,9 @@ class SignUp extends Component {
                 </div>
                 </FormGroup>
                 </Form>
+                </ModalBody>
+            </Modal>
+            </div>
         )
     }
 }

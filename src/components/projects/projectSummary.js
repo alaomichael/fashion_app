@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment'
 import {Card,CardBody, CardTitle, Button,CardLink} from 'reactstrap'
 import { Link } from 'react-router-dom';
+import UpdateProject from './updateProject'
 
 const ProjectSummary = ({ project }) => {
   
@@ -21,6 +22,11 @@ const ProjectSummary = ({ project }) => {
 
 <p className="grey-text"> { moment(project.createdAt.toDate()).calendar() }</p>
 </div>
+// <CardLink>
+// <Link to={ '/project/' + project.id } key={ project.id }>
+// <UpdateProject project={ project }   />Update2
+// </Link>
+// </CardLink>
                     <CardLink><Link to={ '/update/project/' + project.id } >Update</Link></CardLink>
 </CardBody>
 </div>

@@ -204,7 +204,8 @@ background: '#95e8f3'
 <FormGroup>
 <div className="input-field">
 <Label htmlFor="title">Title: </Label>
-<Input type="text" id="title"                             value={ this.state.title }
+<Input type="text" id="title"                             
+value={ this.state.title }
 onChange={ this.handleChange } />
 </div>
 
@@ -224,7 +225,7 @@ onChange={ this.onChange }
 type='text'
 name='phone'
 id='phone'
-                                            value={ this.state.phone }   
+value={ this.state.phone }   
 onChange={ this.onChange }
 />
 </div>
@@ -235,7 +236,7 @@ type='text'
 name='email'
 id='email'
 
-                                            value={ this.state.email }
+value={ this.state.email }
 onChange={ this.onChange }
 />
 </div>
@@ -246,7 +247,7 @@ type='text'
 name='bust'
 id='bust'
 
-                                            value={ this.state.bust }
+value={ this.state.bust }
 onChange={ this.onChange }
 />
 </div>
@@ -257,7 +258,7 @@ type='text'
 name='underbust'
 id='underbust'
 
-                                            value={ this.state.underbust }
+value={ this.state.underbust }
 onChange={ this.onChange }
 />
 </div>
@@ -268,7 +269,7 @@ type='text'
 name='hip'
 id='hip'
 
-                                            value={ this.state.hip }
+value={ this.state.hip }
 onChange={ this.onChange }
 />
 </div>
@@ -279,7 +280,7 @@ type='text'
 name='length'
 id='length'
 
-                                            value={ this.state.length }
+value={ this.state.length }
 onChange={ this.onChange }
 />
 </div>
@@ -290,7 +291,7 @@ type='text'
 name='waist'
 id='waist'
 
-                                            value={ this.state.waist }
+value={ this.state.waist }
 onChange={ this.onChange }
 />
 </div>
@@ -301,7 +302,7 @@ type='text'
 name='nip'
 id='nip'
 
-                                            value={ this.state.nip }
+value={ this.state.nip }
 onChange={ this.onChange }
 />
 </div>
@@ -312,7 +313,7 @@ type='text'
 name='gown_length'
 id='gown_length'
 
-                                            value={ this.state.gown_length }
+value={ this.state.gown_length }
 onChange={ this.onChange }
 />
 </div>
@@ -323,7 +324,7 @@ type='text'
 name='skirt_length'
 id='skirt_length'
 
-                                            value={ this.state.skirt_length }
+value={ this.state.skirt_length }
 onChange={ this.onChange }
 />
 </div>
@@ -334,7 +335,7 @@ type='text'
 name='blouse_length'
 id='blouse_length'
 
-                                            value={ this.state.blouse_length }
+value={ this.state.blouse_length }
 onChange={ this.onChange }
 />
 </div>
@@ -345,7 +346,7 @@ type='text'
 name='skirt_waist'
 id='skirt_waist'
 
-                                            value={ this.state.skirt_waist }
+value={ this.state.skirt_waist }
 onChange={ this.onChange }
 />
 </div>
@@ -356,7 +357,7 @@ type='text'
 name='stk'
 id='stk'
 
-                                            value={ this.state.stk }
+value={ this.state.stk }
 onChange={ this.onChange }
 />
 </div>
@@ -367,7 +368,7 @@ type='text'
 name='shoulder'
 id='shoulder'
 
-                                            value={ this.state.shoulder }
+value={ this.state.shoulder }
 onChange={ this.onChange }
 />
 </div>
@@ -378,7 +379,7 @@ type='text'
 name='sleeve'
 id='sleeve'
 
-                                            value={ this.state.sleeve }
+value={ this.state.sleeve }
 onChange={ this.onChange }
 />
 </div>
@@ -389,7 +390,7 @@ type='text'
 name='round_sleeve'
 id='round_sleeve'
 
-                                            value={ this.state.round_sleeve }
+value={ this.state.round_sleeve }
 onChange={ this.onChange }
 />
 </div>
@@ -463,7 +464,7 @@ onChange={ this.onChangeTodoDescription }
 </div>
 
 <div className="input-field">
-<label>Responsible: </label>
+<label>Person-in-Charge: </label>
 <input type="text" 
 className="form-control"
 value={ this.state.todo_responsible }
@@ -486,7 +487,8 @@ value={ this.state.todo_completed }
 <br/>
 <br />
 <br />
-<div className="form-group">                <input type="submit" value="Update" className="btn btn-success lighten-1 z-depth-0 modal-close waves-effect waves-green btn-flat" /> 
+<div className="form-group">                
+<input type="submit" value="Update" className="btn btn-success lighten-1 z-depth-0 modal-close waves-effect waves-green btn-flat" /> 
 </div>                
 </FormGroup>
 </Form>
@@ -499,15 +501,15 @@ value={ this.state.todo_completed }
 }
 
 const mapStateToProps = (state) => {
-    return {
-        auth: state.firebase.auth
-  }
+return {
+auth: state.firebase.auth
+}
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {
-        updateProject: (project) => dispatch(updateProject(project))
-         }
+return {
+updateProject: (project) => dispatch(updateProject(project))
+}
 }
 export default connect(mapStateToProps, mapDispatchToProps)( UpdateProject);
 

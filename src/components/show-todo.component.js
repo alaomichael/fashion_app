@@ -1,18 +1,16 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+//import {Label} from 'reactstrap';
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom';
+import moment from 'moment'
 
-import {
-       Label
-    
-} from 'reactstrap';
-
-
-export default class ShowTodo extends Component {
+class ShowTodo extends Component {
     constructor(props) {
         super(props);
         this.state = {
             modal: false,
-            username:'',
+            username: '',
             name: '',
             phone: '',
             underbust: '',
@@ -41,7 +39,7 @@ export default class ShowTodo extends Component {
     }
     componentDidMount() {
 
-        
+
         // axios.get('http://localhost:4000/users/')
         //     .then(response => {
         //         if (response.data.length > 0) {
@@ -57,7 +55,7 @@ export default class ShowTodo extends Component {
 
         axios.get('http://localhost:4000/todos/' + this.props.match.params.id)
             .then(response => {
-                    this.setState({
+                this.setState({
                     username: response.data.username,
                     name: response.data.name,
                     phone: response.data.phone,
@@ -77,8 +75,8 @@ export default class ShowTodo extends Component {
                     skirt_waist: response.data.skirt_waist,
                     bust: response.data.bust,
                     date: response.data.date,
-                    image: response.data.image, 
-                    url: response.data.url, 
+                    image: response.data.image,
+                    url: response.data.url,
                     todo_description: response.data.todo_description,
                     todo_responsible: response.data.todo_responsible,
                     todo_priority: response.data.todo_priority,
@@ -91,203 +89,210 @@ export default class ShowTodo extends Component {
     }
     onSubmit(e) {
         e.preventDefault();
-    // Open the Homepage   
+        // Open the Homepage   
         window.location = '/';
 
     }
     render() {
+
+        const { auth } = this.props;
+        if (!auth.uid) return <Redirect to='/signin' />
         return (
-<div>
-<h3 align="center">Show Customer Data</h3>
-<form onSubmit={ this.onSubmit }>
-<h5>
-<div className="form-group">
-<Label >Username: </Label>
-{ `  ` }
-{ this.state.username}
+            <div>
+                <h3 align="center">Show Customer Data</h3>
+                <form onSubmit={ this.onSubmit }>
+                    <h5>
+                        <table className="table table-striped">
+                            <tbody>
+                                <tr>
+                                    <td> Username: </td>
+                                    <td> { this.state.username }</td>
+                                </tr>
+                                <tr>
+                                    <td> Name: </td>
+                                    <td> { this.state.name }</td>
+                                </tr>
+                                <tr>
+                                    <td> Phone: </td>
+                                    <td> { this.state.phone }</td>
+                                </tr>
+                                <tr>
+                                    <td> Email: </td>
+                                    <td> { this.state.email }</td>
+                                </tr>
+                                <tr>
+                                    <td> Bust: </td>
+                                    <td>
+                                        { this.state.bust }</td>
+                                </tr>
+                                <tr>
+                                    <td> UnderBust: </td>
+                                    <td>
+                                        { this.state.underbust }</td>
+                                </tr>
+                                <tr>
+                                    <td> Hip: </td>
+                                    <td>
+                                        { this.state.hip }</td>
+                                </tr>
+                                <tr>
+                                    <td> Length: </td>
+                                    <td>
+                                        { this.state.length }</td>
+                                </tr>
+                                <tr>
+                                    <td> Waist: </td>
+                                    <td>
+                                        { this.state.waist }</td>
+                                </tr>
+                                <tr>
+                                    <td> Nip to Nip: </td>
+                                    <td>
+                                        { this.state.nip }</td>
+                                </tr>
+                                <tr>
+                                    <td> Gown Length: </td>
+                                    <td>
+                                        { this.state.gown_length }</td>
+                                </tr>
+                                <tr>
+                                    <td> Skirt Length: </td>
+                                    <td>
+                                        { this.state.skirt_length }</td>
+                                </tr>
+                                <tr>
+                                    <td> Blouse Length: </td>
+                                    <td>
+                                        { this.state.blouse_length }</td>
+                                </tr>
+                                <tr>
+                                    <td> Skirt Waist: </td>
+                                    <td>
+                                        { this.state.skirt_waist }</td>
+                                </tr>
+                                <tr>
+                                    <td> Shoulder to Knee: </td>
+                                    <td>
+                                        { this.state.stk }</td>
+                                </tr>
+                                <tr>
+                                    <td> Shoulder: </td>
+                                    <td>
+                                        { this.state.shoulder }</td>
+                                </tr>
+                                <tr>
+                                    <td>Sleeve: </td>
+                                    <td>
+                                        { this.state.sleeve }</td>
+                                </tr>
+                                <tr>
+                                    <td> Round Sleeve: </td>
+                                    <td>
+                                        { this.state.round_sleeve }</td>
+                                </tr>
+                                <tr>
+                                    <td> Style: </td>
+                                    <td>  <div><a href={ this.state.url }>
+                                        { this.state.image && <img src={ this.state.url } height="150" width="150" /> }</a>
+                                    </div></td>
+                                </tr>
+                                <tr>
+                                    <td> Due for Collection: </td>
+                                    <td>
+                                        { moment(this.state.date).toLocaleString() }</td>
+                                </tr>
+                                <tr>
+                                    <td> Style Description: </td>
+                                    <td> { this.state.todo_description }</td>
+                                </tr>
+                                <tr>
+                                    <td> Person-in-Charge: </td>
+                                    <td>
+                                        { this.state.todo_responsible }</td>
+                                </tr>
+                                <tr>
+                                    <td>Priority: </td>
+                                    <td>
+                                        <div className="form-group">
+                                            <div className="form-check form-check-inline">
+                                                { ` ` }
+                                                { this.state.todo_priority === 'Low' }
+                                                <input className="form-check-input"
+                                                    type="radio"
+                                                    name="priorityOptions"
+                                                    id="priorityLow"
+                                                    value="Low"
+                                                    checked={ this.state.todo_priority === 'Low' }
+                                                    readOnly="True"
+                                                />
+                                                <label className="form-check-label">Low</label>
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input
+                                                    className="form-check-input"
+                                                    type="radio"
+                                                    name="priorityOptions"
+                                                    id="priorityMedium"
+                                                    value="Medium"
+                                                    checked={ this.state.todo_priority === 'Medium' }
+                                                    readOnly="True"
+                                                />
+                                                <label className="form-check-label">Medium</label>
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                                <input className="form-check-input"
+                                                    type="radio"
+                                                    name="priorityOptions"
+                                                    id="priorityHigh"
+                                                    value="High"
+                                                    checked={ this.state.todo_priority === 'High' }
+                                                    readOnly="True"
+                                                />
+                                                <label className="form-check-label">High</label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td className="form-check" > Completed: </td>
+                                    <td>
+                                        { this.state.todo_completed }
+                                        <input
+                                            className="form-check-input"
+                                            id="completedCheckbox"
+                                            type="checkbox"
+                                            name="completedCheckbox"
+                                            readOnly="True"
+                                            checked={ this.state.todo_completed }
+                                            value={ this.state.todo_completed }
+                                        /> </td>
+                                </tr>
+                            </tbody>
 
-</div>
-<div className="form-group">
-<Label for='item'>Name: </Label>
-{`  `}
-                        { this.state.name }
-</div>
-<div className="form-group">
-<Label for='phone'>Phone: </Label>
-{ `  ` }
-{ this.state.phone }
-</div>
-<div className="form-group">
-<Label for='email'>E-mail: </Label>
-{ `  ` }
-{ this.state.email }
-
-</div>
-<div className="form-group">
-<Label for='bust'>Bust: </Label>
-{ `  ` }
-{ this.state.bust }
-</div>
-<div className="form-group">
-<Label for='underbust'>UnderBust: </Label>
-{ `  ` }
-{ this.state.underbust }
-</div>
-<div className="form-group">
-<Label for='hip'>Hip: </Label>
-{ `  ` }
-{ this.state.hip }
-</div>
-<div className="form-group">
-<Label for='length'>Length: </Label>
-{ `  ` }
-{ this.state.length }
-</div>
-<div className="form-group">
-<Label for='waist'>Waist: </Label>
-{ `  ` }
-{ this.state.waist }
-
-</div>
-<div className="form-group">
-<Label for='nip'>Nip to Nip: </Label>
-{ `  ` }
-{ this.state.nip }
-
-</div>
-<div className="form-group">
-<Label for='gown_length'>Gown Length: </Label>
-{ `  ` }
-{ this.state.gown_length }
-
-</div>
-<div className="form-group">
-<Label for='skirt_length'>Skirt Length: </Label>
-{ `  ` }
-{ this.state.skirt_length }
-
-</div>
-<div className="form-group">
-<Label for='blouse_length'>Blouse Length: </Label>
-{ `  ` }
-{ this.state.blouse_length }
-
-</div>
-<div className="form-group">
-<Label for='skirt_waist'>Skirt Waist: </Label>
-{ `  ` }
-{ this.state.skirt_waist }
-
-</div>
-<div className="form-group">
-<Label for='stk'>Shoulder to Knee: </Label>
-{ `  ` }
-{ this.state.stk }
-
-</div>
-<div className="form-group">
-<Label for='shoulder'>Shoulder: </Label>
-{ `  ` }
-{ this.state.shoulder }
-
-</div>
-<div className="form-group">
-<Label for='sleeve'>Sleeve: </Label>
-{ `  ` }
-{ this.state.sleeve }
-
-</div>
-<div className="form-group">
-<Label for='round_sleeve'>Round Sleeve: </Label>
-{ `  ` }
-{ this.state.round_sleeve }
-
-</div>
-<div className="form-group">
-<Label for='url'>Picture: </Label>
-{ `  ` }
-{ this.state.image && <img src={ this.state.url } height="150" width="150" /> }
-</div>
-
-<div className="form-group">
-<Label for='date'>Collection Date: </Label>
-{`  `}
-{ this.state.date }
-</div>
-<div className="form-group">
-<label>Description: </label> {` `}
-{ this.state.todo_description }
-
-</div>
-<div className="form-group">
-<label>Responsible: </label>
-{ ` ` }
-{ this.state.todo_responsible }
-
-</div>
-
-<div className="form-group">
-<div className="form-check form-check-inline">
-{` `}
-{ this.state.todo_priority === 'Low' }
-<input className="form-check-input"
-type="radio"
-name="priorityOptions"
-id="priorityLow"
-value="Low"
-checked={ this.state.todo_priority === 'Low' }
-readOnly="True"
-/>
-
-<label className="form-check-label">Low</label>
-</div>
-
-<div className="form-check form-check-inline">
-<input
-className="form-check-input"
-type="radio"
-name="priorityOptions"
-id="priorityMedium"
-value="Medium"
-checked={ this.state.todo_priority === 'Medium' }
-readOnly="True"
-/>
-<label className="form-check-label">Medium</label>
-</div>
-<div className="form-check form-check-inline">
-<input className="form-check-input"
-type="radio"
-name="priorityOptions"
-id="priorityHigh"
-value="High"
-checked={ this.state.todo_priority === 'High' }
-readOnly="True"
-/>
-<label className="form-check-label">High</label>
-</div>
-</div>
-<div className="form-check">
-{ this.state.todo_completed }
-<input
-className="form-check-input"
-id="completedCheckbox"
-type="checkbox"
-name="completedCheckbox"
-readOnly="True"
-checked={ this.state.todo_completed }
-value={ this.state.todo_completed }
-/>
-<label className="form-check-label" htmlFor="completedCheckbox">Completed</label>
-</div>
-<br/>
-<div className="form-group">
-<input type="submit"
-value="Back"
-className="btn btn-primary" />
-                    </div>
+                        </table>
+                        <br />
+                        <div className="form-group">
+                            <input type="submit"
+                                value="Back"
+                                className="btn btn-primary" />
+                        </div>
                     </h5>
-                </form>
-            </div>
+                </form >
+            </div >
         )
     }
 }
+
+
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth
+    }
+}
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         createProject: (project) => dispatch(createProject(project))
+//     }
+// }
+export default connect(mapStateToProps)(ShowTodo);
